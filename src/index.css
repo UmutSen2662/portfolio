@@ -12,37 +12,41 @@
     --color-nlight-300: var(--color-nlight-300);
     --color-nlight-400: var(--color-nlight-400);
     --color-nlight-500: var(--color-nlight-500);
-}
 
+    --color-primary-400: var(--color-primary-400);
+    --color-primary-500: var(--color-primary-500);
+    --color-primary-600: var(--color-primary-600);
+    --color-primary-700: var(--color-primary-700);
+    --color-primary-800: var(--color-primary-800);
+}
 
 :root {
     --color-ndark-900: oklab(0.05 0.001 0.005);
     --color-ndark-800: oklab(0.15 0.001 0.005);
     --color-ndark-700: oklab(0.25 0.001 0.005);
     --color-ndark-600: oklab(0.35 0.001 0.005);
-    --color-ndark-500: oklab(0.45 0.001 0.005);
 
     --color-nlight-100: oklab(0.95 0 0);
     --color-nlight-200: oklab(0.85 0 0);
     --color-nlight-300: oklab(0.75 0 0);
     --color-nlight-400: oklab(0.65 0 0);
-    --color-nlight-500: oklab(0.55 0 0);
 
-    --color-emerald-400: oklab(75% -0.18 0.11);
-    --color-emerald-500: oklab(70% -0.18 0.11);
-    --color-emerald-600: oklab(65% -0.18 0.11);
-    --color-emerald-700: oklab(60% -0.18 0.11);
-    --color-emerald-800: oklab(55% -0.18 0.11);
-
-    --emerald: 65% -0.18 0.11;
+    --color-primary-400: oklab(0.75 0.01 0.15);
+    --color-primary-500: oklab(0.7 0.01 0.15);
+    --color-primary-600: oklab(0.65 0.01 0.15);
+    --color-primary-700: oklab(0.6 0.01 0.15);
+    --color-primary-800: oklab(0.55 0.01 0.15);
 
     font-size: 18px;
 }
 
+::selection {
+    background-color: var(--color-primary-700);
+    color: var(--color-nlight-100);
+}
+
 body {
     min-height: 100dvh;
-    background-color: var(--color-ndark-800);
-    background-image: radial-gradient(oklab(var(--emerald) / 0.20) 1px, transparent 0);
-    background-size: 36px 36px;
+    background-color: var(--color-ndark-900);
     color: var(--color-nlight-200);
 }
