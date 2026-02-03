@@ -2,49 +2,41 @@ import type { Experience } from "@/lib/types";
 
 export const EXPERIENCE: Experience[] = [
     {
-        id: "tech-corp-frontend",
+        id: "orion-innovation",
         translations: {
             en: {
-                role: "Frontend Developer",
-                description: "Building responsive web applications using React and TypeScript.",
-                achievements: [
-                    "Optimized performance, reducing load time by 30%.",
-                    "Collaborated with UX designers to implement new features."
-                ]
+                role: "Backend Developer Intern",
+                description:
+                    "Worked as part of an 18-person team on a large-scale enterprise platform. Contributed to backend services using Java Spring Boot, including implementing transactional audit logging and AOP performance optimizations. Gained valuable experience with professional CI/CD pipelines and Agile workflows.",
             },
             tr: {
-                role: "Frontend Geliştirici",
-                description: "React ve TypeScript kullanarak duyarlı web uygulamaları geliştirme.",
-                achievements: [
-                    "Performansı optimize ederek yükleme süresini %30 azalttı.",
-                    "Yeni özellikler uygulamak için UX tasarımcılarıyla işbirliği yaptı."
-                ]
-            }
+                role: "Backend Geliştirici Stajyeri",
+                description:
+                    "18 kişilik bir ekibin parçası olarak büyük ölçekli bir kurumsal platform üzerinde çalıştım. Java Spring Boot kullanarak backend servislerine katkıda bulundum, işlemsel denetim kaydı (transactional audit logging) ve AOP performans optimizasyonları gerçekleştirdim. Profesyonel CI/CD süreçleri ve Agile iş akışları konusunda değerli deneyimler kazandım.",
+            },
         },
-        company: "Tech Corp",
-        startDate: "Jan 2023",
-        endDate: "Present"
+        company: "Orion Innovation",
+        startDate: "Jul 2025",
+        endDate: "Aug 2025",
+        technologies: ["Java Spring Boot", "PostgreSQL", "Hibernate/JPA", "Maven", "Swagger"],
     },
     {
-        id: "startup-inc-intern",
+        id: "3d-probox",
         translations: {
             en: {
-                role: "Intern",
-                description: "Assisted in backend development with Node.js.",
-                achievements: [
-                    "Built a REST API for user authentication."
-                ]
+                role: "Full-Stack Developer Intern",
+                description:
+                    "Developed custom Framer and Webflow Plugins to enable no-code embedding of 3D models. Integrated Supabase for data caching to reduce main server load and implemented fuzzy search logic for real-time model retrieval.",
             },
             tr: {
-                role: "Stajyer",
-                description: "Node.js ile backend geliştirmeye yardımcı oldu.",
-                achievements: [
-                    "Kullanıcı kimlik doğrulaması için bir REST API oluşturdu."
-                ]
-            }
+                role: "Full-Stack Geliştirici Stajyeri",
+                description:
+                    "3D modellerin kodsuz entegrasyonunu sağlamak için özel Framer ve Webflow eklentileri geliştirdim. Ana sunucu yükünü azaltmak amacıyla veri önbellekleme için Supabase entegrasyonu yaptım ve gerçek zamanlı model alımı için fuzzy arama mantığı uyguladım.",
+            },
         },
-        company: "Startup Inc",
-        startDate: "Jun 2022",
-        endDate: "Aug 2022"
-    }
+        company: "3D ProBox",
+        startDate: "Jun 2024",
+        endDate: "Aug 2024",
+        technologies: ["React", "Svelte", "Supabase", "Framer API", "Webflow API"],
+    },
 ];

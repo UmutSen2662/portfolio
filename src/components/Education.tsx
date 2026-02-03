@@ -7,8 +7,10 @@ export function Education() {
     const { language, t } = useLanguage();
 
     return (
-        <section id="education" className="flex flex-col gap-4">
-            <h2 className="text-2xl font-bold">{t("nav.education")}</h2>
+        <section id="education" className="flex flex-col gap-4 pt-12">
+            <h2 className="text-2xl font-bold flex items-center gap-2">
+                <span className="text-primary-400">/</span> {t("nav.education")}
+            </h2>
 
             <div className="flex flex-col gap-4">
                 {EDUCATION.map((edu) => (
