@@ -29,12 +29,12 @@ export function InteractiveBackground() {
         const BASE_MAX_RADIUS = 5;
         const HOVER_MAX_RADIUS = 8;
 
-        const MOUSE_INFLUENCE_RADIUS = 100;
-        const HOVER_MOUSE_INFLUENCE_RADIUS = 150;
-        const ATTRACTOR_INFLUENCE_RADIUS = 60;
+        const MOUSE_INFLUENCE_RADIUS = 80;
+        const HOVER_MOUSE_INFLUENCE_RADIUS = 120;
+        const ATTRACTOR_INFLUENCE_RADIUS = 40;
 
-        const DOT_COLOR = "rgba(183, 134, 0, 0.2)";
-        const HOVER_DOT_COLOR = "rgba(183, 134, 0, 0.7)";
+        const DOT_COLOR = "rgba(183, 134, 0, 0.25)";
+        const HOVER_DOT_COLOR = "rgba(183, 134, 0, 0.75)";
         const HOVER_DOT_BLUR = "blur(8px)";
         const TRANSITION_DURATION = 0.2;
 

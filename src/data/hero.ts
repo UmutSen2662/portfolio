@@ -1,19 +1,26 @@
 export const HERO = {
     links: {
         github: "https://github.com/UmutSen2662",
-        linkedin: "https://linkedin.com/in/umut-sen-2662-",
+        linkedin: "https://linkedin.com/in/umutsen-dev",
         resume: "https://portfolio.umutsen.dev",
-        email: "mailto:umutsen2662@gmail.com"
+        email: "mailto:umutsen2662@gmail.com",
     },
     translations: {
         en: {
-            title: "Hello, I'm Umut",
-            description: "I'm a Full-Stack Developer from Denizli, Turkey 🇹🇷",
+            greeting: "Hi, I'm Umut",
+            title: "Full-Stack Developer",
+            description: "React, Node.js & TypeScript | METU High Honors (3.8 GPA)",
+            location: "Based in Denizli, Turkey 🇹🇷",
+            downloadResume: "Download Resume",
+            viewProjects: "View Projects",
         },
         tr: {
-            title: "Merhaba, Ben Umut",
-            description: "Denizli'de yaşayan bir Full-Stack Geliştiriciyim",
-        }
-    }
-
-}
+            greeting: "Merhaba, Ben Umut",
+            title: "Full-Stack Geliştirici",
+            description: "React, Node.js & TypeScript | ODTÜ Yüksek Şeref (3.8 GPA)",
+            location: "Denizli, Türkiye 🇹🇷",
+            downloadResume: "CV İndir",
+            viewProjects: "Projelerim",
+        },
+    },
+};

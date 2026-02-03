@@ -3,6 +3,7 @@
 We have implemented a high-performance, interactive background system.
 
 ## Features
+
 1.  **Mouse Interaction**: Dots grow when the cursor is near.
 2.  **Component "Attractors"**: Specific components can registered to "attract" dots (make them grow) even when the mouse isn't there. This works for scrolling elements!
 3.  **Glow Effect**: Dots have a subtle glowing shadow.
@@ -11,9 +12,11 @@ We have implemented a high-performance, interactive background system.
 ## Usage
 
 ### 1. Global Setup
+
 The `CanvasProvider` and `<InteractiveBackground />` are already set up in `App.tsx`.
 
 ### 2. Making a Component an Attractor
+
 To make a component influence the background dots:
 
 ```tsx
@@ -36,8 +39,13 @@ export function MyComponent() {
 ```
 
 ## Configuration
+
 Adjust constants in `src/components/ui/InteractiveBackground.tsx` to change:
-*   `DOT_SPACING`
-*   `DOT_MAX_RADIUS`
-*   `MOUSE_INFLUENCE_RADIUS`
-*   `ATTRACTOR_INFLUENCE_RADIUS`
+
+- `DOT_SPACING`: Distance between dots
+- `DOT_BASE_RADIUS`: Minimum size of dots
+- `BASE_MAX_RADIUS`: Maximum size when interacting with mouse
+- `HOVER_MAX_RADIUS`: Maximum size when hovering over interactive elements
+- `MOUSE_INFLUENCE_RADIUS`: Radius of mouse effect
+- `HOVER_MOUSE_INFLUENCE_RADIUS`: Radius of mouse effect during hover state
+- `ATTRACTOR_INFLUENCE_RADIUS`: Radius of component attractor effect

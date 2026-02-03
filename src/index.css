@@ -42,7 +42,7 @@
 }
 
 ::selection {
-    background-color: var(--color-primary-700);
+    background-color: color-mix(in oklab, var(--color-primary-400), transparent 60%);
     color: var(--color-nlight-100);
 }
 

@@ -3,6 +3,7 @@ import { Hero } from "./components/Hero";
 import { useLanguage } from "./context/LanguageContext";
 import { CanvasProvider } from "./context/CanvasContext";
 import { InteractiveBackground } from "./components/ui/InteractiveBackground";
+import { Education } from "./components/Education";
 
 function App() {
     const { t } = useLanguage();
@@ -13,13 +14,10 @@ function App() {
             <div className="max-w-3xl mx-auto transition-all duration-200">
                 <Navbar />
 
-                <main className="flex flex-col gap-8 mx-4">
+                <main className="flex flex-col gap-12 mx-4 pb-20">
                     <Hero />
 
-                    {/* Placeholder for education */}
-                    <section id="education">
-                        <h2 className="text-xl">{t("nav.education")}</h2>
-                    </section>
+                    <Education />
 
                     {/* Placeholder for experience */}
                     <section id="experience">

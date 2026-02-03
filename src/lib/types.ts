@@ -12,6 +12,9 @@ export interface ExperienceTranslations {
 
 export interface EducationTranslations {
     degree: string;
+    institution: string;
+    location: string;
+    honors: string;
 }
 
 // Main data interfaces with hybrid structure
@@ -35,9 +38,10 @@ export interface Experience {
 export interface Education {
     id: string;
     translations: Record<Language, EducationTranslations>;
-    institution: string;
     startDate: string;
     endDate: string;
+    gpa?: string;
+    logo?: string;
 }
 
-export type Language = 'en' | 'tr';
+export type Language = "en" | "tr";

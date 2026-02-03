@@ -1,58 +1,114 @@
-import { FaGithub, FaLinkedin, FaFileAlt, FaEnvelope } from "react-icons/fa";
+import { useEffect, useRef } from "react";
+import { FaGithub, FaLinkedin, FaFileAlt, FaEnvelope, FaCode } from "react-icons/fa";
 import { useLanguage } from "../context/LanguageContext";
 import { useCanvas } from "../context/CanvasContext";
 import { HERO } from "../data/hero";
 
 export function Hero() {
     const { language } = useLanguage();
-    const { setIsHovering } = useCanvas();
+    const { setIsHovering, registerAttractor, unregisterAttractor } = useCanvas();
+    const titleRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (titleRef.current) {
+            registerAttractor(titleRef);
+        }
+        return () => {
+            unregisterAttractor(titleRef);
+        };
+    }, [registerAttractor, unregisterAttractor]);
 
     const handleMouseEnter = () => setIsHovering(true);
     const handleMouseLeave = () => setIsHovering(false);
 
+    const t = HERO.translations[language];
+
     return (
-        <section id="hero" className="py-12 flex flex-col items-center gap-4">
-            <h2 className="text-4xl font-bold">{HERO.translations[language].title}</h2>
-            <h3 className="text-xl">{HERO.translations[language].description}</h3>
-            <div className="flex gap-4 text-lg">
+        <section
+            id="hero"
+            className="min-h-[60vh] flex flex-col items-center justify-center text-center gap-6 py-20 relative z-10"
+        >
+            {/* Top: Small Greeting */}
+            <p className="text-xl md:text-2xl text-nlight-200 font-medium tracking-wide">{t.greeting}</p>
+
+            {/* Middle: Huge H1 (Attractor) */}
+            <div className="relative w-fit mx-auto">
+                <h1 className="flex flex-col items-center leading-tight">
+                    {t.title.split(" ").map((word, index) => (
+                        <span
+                            key={index}
+                            className="text-5xl md:text-7xl lg:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-r from-nlight-100/90 to-nlight-100/70 pb-2"
+                        >
+                            {word}
+                        </span>
+                    ))}
+                </h1>
+                <div ref={titleRef} className="absolute top-0 left-0 w-full h-full z-[-10]"></div>
+            </div>
+
+            {/* Bottom: Medium Subtitle */}
+            <p className="text-lg md:text-2xl text-nlight-300 max-w-2xl font-light">{t.description}</p>
+
+            {/* Footer of Hero: Location */}
+            <p className="text-base text-nlight-400 opacity-80 mt-2">{t.location}</p>
+
+            {/* CTAs */}
+            <div className="flex flex-col md:flex-row items-center gap-6 mt-8">
+                {/* Primary CTA - View Projects (Hover Strategy) */}
                 <a
-                    href={HERO.links.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 hover:text-nlight-100"
+                    href="#projects"
+                    className="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-bold text-lg transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-primary-500/20 flex items-center gap-2"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 >
-                    <FaGithub /> GitHub
+                    <FaCode /> {t.viewProjects}
                 </a>
-                <a
-                    href={HERO.links.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 hover:text-nlight-100"
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                >
-                    <FaLinkedin /> LinkedIn
-                </a>
-                <a
-                    href={HERO.links.resume}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 hover:text-nlight-100"
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                >
-                    <FaFileAlt /> Resume
-                </a>
-                <a
-                    href={HERO.links.email}
-                    className="flex items-center gap-2 hover:text-nlight-100"
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                >
-                    <FaEnvelope /> Email
-                </a>
+
+                {/* Secondary Social Links */}
+                <div className="flex gap-6 text-2xl text-nlight-300">
+                    <a
+                        href={HERO.links.resume}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-white transition-colors hover:scale-110 transform duration-200"
+                        aria-label="Resume"
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        <FaFileAlt />
+                    </a>
+                    <a
+                        href={HERO.links.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-white transition-colors hover:scale-110 transform duration-200"
+                        aria-label="GitHub"
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        <FaGithub />
+                    </a>
+                    <a
+                        href={HERO.links.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-white transition-colors hover:scale-110 transform duration-200"
+                        aria-label="LinkedIn"
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        <FaLinkedin />
+                    </a>
+                    <a
+                        href={HERO.links.email}
+                        className="hover:text-white transition-colors hover:scale-110 transform duration-200"
+                        aria-label="Email"
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        <FaEnvelope />
+                    </a>
+                </div>
             </div>
         </section>
     );
