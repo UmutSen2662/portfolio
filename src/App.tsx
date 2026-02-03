@@ -13,24 +13,23 @@ function App() {
             <div className="max-w-3xl mx-auto transition-all duration-200">
                 <Navbar />
 
-                <main className="flex flex-col gap-8">
+                <main className="flex flex-col gap-8 mx-4">
                     <Hero />
 
                     {/* Placeholder for education */}
                     <section id="education">
-                        <h2 className="text-xl">{t('nav.education')}</h2>
+                        <h2 className="text-xl">{t("nav.education")}</h2>
                     </section>
 
                     {/* Placeholder for experience */}
                     <section id="experience">
-                        <h2 className="text-xl">{t('nav.experience')}</h2>
+                        <h2 className="text-xl">{t("nav.experience")}</h2>
                     </section>
 
                     {/* Placeholder for projects */}
                     <section id="projects">
-                        <h2 className="text-xl">{t('nav.projects')}</h2>
+                        <h2 className="text-xl">{t("nav.projects")}</h2>
                     </section>
-
                 </main>
             </div>
         </CanvasProvider>
