@@ -21,10 +21,10 @@
 }
 
 :root {
-    --color-ndark-900: oklab(0.15 -0.002 0.015);
-    --color-ndark-800: oklab(0.2 -0.002 0.015);
-    --color-ndark-700: oklab(0.25 -0.002 0.015);
-    --color-ndark-600: oklab(0.3 -0.002 0.015);
+    --color-ndark-900: oklab(0.15 0.001 0.003);
+    --color-ndark-800: oklab(0.2 0.001 0.003);
+    --color-ndark-700: oklab(0.25 0.001 0.003);
+    --color-ndark-600: oklab(0.3 0.001 0.003);
 
     --color-nlight-100: oklab(0.95 0 0);
     --color-nlight-200: oklab(0.85 0 0);

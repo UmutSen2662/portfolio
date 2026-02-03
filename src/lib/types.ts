@@ -2,6 +2,7 @@
 export interface ProjectTranslations {
     title: string;
     description: string;
+    detailedDescription?: string;
 }
 
 export interface ExperienceTranslations {
@@ -22,9 +23,12 @@ export interface Project {
     id: string;
     translations: Record<Language, ProjectTranslations>;
     technologies: string[];
-    repoUrl?: string;
-    demoUrl?: string;
-    imageUrl?: string;
+    images?: string[];
+    links?: {
+        title: string;
+        url: string;
+        icon?: "github" | "external";
+    }[];
 }
 
 export interface Experience {

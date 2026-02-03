@@ -1,13 +1,13 @@
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
-import { useLanguage } from "./context/LanguageContext";
 import { CanvasProvider } from "./context/CanvasContext";
 import { InteractiveBackground } from "./components/ui/InteractiveBackground";
 import { Education } from "./components/Education";
 import { Experience } from "./components/Experience";
+import { Projects } from "./components/Projects";
 
 function App() {
-    const { t } = useLanguage();
+    // const { t } = useLanguage(); // Removed unused t
 
     return (
         <CanvasProvider>
@@ -22,10 +22,7 @@ function App() {
 
                     <Experience />
 
-                    {/* Placeholder for projects */}
-                    <section id="projects">
-                        <h2 className="text-xl">{t("nav.projects")}</h2>
-                    </section>
+                    <Projects />
                 </main>
             </div>
         </CanvasProvider>
