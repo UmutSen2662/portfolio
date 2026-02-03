@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import { FaGithub, FaLinkedin, FaFileAlt, FaEnvelope, FaCode } from "react-icons/fa";
-import { useLanguage } from "../context/LanguageContext";
-import { useCanvas } from "../context/CanvasContext";
-import { HERO } from "../data/hero";
+import { useLanguage } from "@/context/LanguageContext";
+import { useCanvas } from "@/context/CanvasContext";
+import { HERO } from "@/data/hero";
+import { Button } from "@/components/ui/Button";
 
 export function Hero() {
     const { language } = useLanguage();
@@ -55,14 +56,16 @@ export function Hero() {
             {/* CTAs */}
             <div className="flex flex-col md:flex-row items-center gap-6 mt-8">
                 {/* Primary CTA - View Projects (Hover Strategy) */}
-                <a
+                <Button
                     href="#projects"
-                    className="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-bold text-lg transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-primary-500/20 flex items-center gap-2"
+                    variant="default"
+                    size="lg"
+                    className="gap-2 active:scale-95"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 >
                     <FaCode /> {t.viewProjects}
-                </a>
+                </Button>
 
                 {/* Secondary Social Links */}
                 <div className="flex gap-6 text-2xl text-nlight-300">

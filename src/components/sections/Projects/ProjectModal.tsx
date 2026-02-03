@@ -1,6 +1,7 @@
 import type { Project } from "@/lib/types";
 import { useLanguage } from "@/context/LanguageContext";
 import { FaTimes } from "react-icons/fa";
+import { Button } from "@/components/ui/Button";
 
 interface ProjectModalProps {
     project: Project;
@@ -32,12 +33,14 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 style={{ viewTransitionName: `project-${project.id}` } as React.CSSProperties}
             >
                 <div className="absolute top-4 right-4 z-50">
-                    <button
+                    <Button
                         onClick={onClose}
-                        className="p-2 rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors backdrop-blur-md"
+                        variant="ghost"
+                        size="icon"
+                        className="rounded-full bg-black/40 text-white hover:bg-black/60 hover:text-white backdrop-blur-md"
                     >
                         <FaTimes size={20} />
-                    </button>
+                    </Button>
                 </div>
 
                 <div className="shrink-0 aspect-[16/9] w-full relative overflow-hidden bg-ndark-950">
@@ -67,15 +70,17 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                                 {project.links && project.links.length > 0 && (
                                     <div className="flex flex-wrap gap-4 items-center">
                                         {project.links.map((link) => (
-                                            <a
+                                            <Button
                                                 key={link.title}
                                                 href={link.url}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                className="text-nlight-400 hover:text-primary-400 font-medium transition-colors text-sm hover:underline underline-offset-4"
+                                                variant="outline"
+                                                size="sm"
+                                                className="gap-2"
                                             >
                                                 {link.title}
-                                            </a>
+                                            </Button>
                                         ))}
                                     </div>
                                 )}

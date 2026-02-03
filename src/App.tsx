@@ -1,10 +1,10 @@
-import { Navbar } from "./components/Navbar";
-import { Hero } from "./components/Hero";
-import { CanvasProvider } from "./context/CanvasContext";
-import { InteractiveBackground } from "./components/ui/InteractiveBackground";
-import { Education } from "./components/Education";
-import { Experience } from "./components/Experience";
-import { Projects } from "./components/Projects";
+import { Navbar } from "@/components/layout/Navbar";
+import { Hero } from "@/components/sections/Hero";
+import { CanvasProvider } from "@/context/CanvasContext";
+import { InteractiveBackground } from "@/components/layout/InteractiveBackground";
+import { Education } from "@/components/sections/Education";
+import { Experience } from "@/components/sections/Experience";
+import { Projects } from "@/components/sections/Projects";
 
 function App() {
     // const { t } = useLanguage(); // Removed unused t

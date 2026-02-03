@@ -2,8 +2,8 @@ import { useState } from "react";
 import { PROJECTS } from "@/data/projects";
 import { useLanguage } from "@/context/LanguageContext";
 import { flushSync } from "react-dom";
-import { ProjectCard } from "@/components/projects/ProjectCard";
-import { ProjectModal } from "@/components/projects/ProjectModal";
+import { ProjectCard } from "./ProjectCard";
+import { ProjectModal } from "./ProjectModal";
 
 // Helper removed as inline checks are used
 

@@ -6,7 +6,7 @@ export function Navbar() {
 
     return (
         <nav className="p-4 border-b flex justify-between items-center">
-            <a href="#hero" className="text-xl font-bold hover:text-nlight-100">
+            <a href="#hero" className="text-2xl font-bold hover:text-nlight-100">
                 Umut Şen
             </a>
             <div className="flex items-center gap-6">
