@@ -20,7 +20,7 @@ export const PROJECTS: Project[] = [
             },
         },
         technologies: ["React", "FastAPI", "Caddy", "Python", "TypeScript", "Tailwind"],
-        images: ["https://placehold.co/1920x1080"],
+        images: ["/images/bare-metal-paas-1.webp", "/images/bare-metal-paas-2.webp", "/images/bare-metal-paas-3.webp"],
         links: [
             {
                 title: "Source Code",
@@ -48,7 +48,7 @@ export const PROJECTS: Project[] = [
             },
         },
         technologies: ["React", "Supabase", "Tailwind", "TypeScript", "WebRTC", "Vite PWA"],
-        images: ["https://placehold.co/1920x1080"],
+        images: ["/images/chat-app-1.webp", "/images/chat-app-2.webp"],
         links: [
             {
                 title: "View Live",
@@ -81,7 +81,7 @@ export const PROJECTS: Project[] = [
             },
         },
         technologies: ["Next.js", "TypeScript", "TMDB API", "React", "Tailwind"],
-        images: ["https://placehold.co/1920x1080"],
+        images: ["/images/usrc-1.webp", "/images/usrc-2.webp", "/images/usrc-3.webp"],
         links: [
             {
                 title: "View Live",
@@ -109,7 +109,7 @@ export const PROJECTS: Project[] = [
             },
         },
         technologies: ["Node.js", "Socket.io", "Express.js", "EJS", "CSS3"],
-        images: ["https://placehold.co/1920x1080"],
+        images: ["/images/mono-1.webp", "/images/mono-2.webp", "/images/mono-3.webp", "/images/mono-4.webp"],
         links: [
             {
                 title: "View Live",
@@ -142,7 +142,7 @@ export const PROJECTS: Project[] = [
             },
         },
         technologies: ["Svelte", "Supabase", "Vite", "PWA", "JavaScript"],
-        images: ["https://placehold.co/1920x1080"],
+        images: ["/images/scheduler-1.webp", "/images/scheduler-2.webp", "/images/scheduler-3.webp"],
         links: [
             { title: "View Live", url: "https://scheduler.umutsen.dev", icon: "external" },
             { title: "Source Code", url: "https://github.com/UmutSen2662/scheduler", icon: "github" },
@@ -167,7 +167,7 @@ export const PROJECTS: Project[] = [
             },
         },
         technologies: ["Python", "Flask", "HTMX", "SQLAlchemy", "Google OAuth", "JavaScript"],
-        images: ["https://placehold.co/1920x1080"],
+        images: ["/images/metu-gpa-calculator-1.webp"],
         links: [
             {
                 title: "View Live",

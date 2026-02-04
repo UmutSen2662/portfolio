@@ -7,11 +7,16 @@ interface ProjectCardProps {
     onClick: () => void;
     isSelected: boolean;
     viewTransitionName?: string;
+    activeImageIndex: number;
 }
 
-export function ProjectCard({ project, onClick, isSelected, viewTransitionName }: ProjectCardProps) {
+export function ProjectCard({ project, onClick, isSelected, viewTransitionName, activeImageIndex }: ProjectCardProps) {
     const { language } = useLanguage();
     const t = project.translations[language];
+
+    // Determine which image to show based on the propagated state
+    // Default to the first image if the index is out of bounds or images array is empty
+    const displayImage = project.images && project.images[activeImageIndex] ? project.images[activeImageIndex] : null;
 
     return (
         <Card
@@ -30,11 +35,12 @@ export function ProjectCard({ project, onClick, isSelected, viewTransitionName }
                                 : undefined
                         }
                     >
-                        {/* Placeholder content - use first image if available, else gradient/fallback */}
-                        {project.images && project.images[0] ? (
+                        {/* Placeholder content - use active image if available, else gradient/fallback */}
+                        {displayImage ? (
                             <div className="absolute inset-0">
                                 <img
-                                    src={project.images[0]}
+                                    loading="lazy"
+                                    src={displayImage}
                                     alt=""
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                 />

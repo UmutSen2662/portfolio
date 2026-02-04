@@ -1,19 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, useCallback, useState } from "react";
 import type { Project } from "@/data/types";
 import { useLanguage } from "@/context/LanguageContext";
-import { FaExternalLinkAlt, FaGithub, FaTimes } from "react-icons/fa";
+import { FaExternalLinkAlt, FaGithub, FaTimes, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Button } from "@/components/ui/Button";
+import useEmblaCarousel from "embla-carousel-react";
 
 interface ProjectModalProps {
     project: Project;
     onClose: () => void;
+    initialImageIndex: number;
+    onIndexChange: (index: number) => void;
 }
 
-export function ProjectModal({ project, onClose }: ProjectModalProps) {
+export function ProjectModal({ project, onClose, initialImageIndex, onIndexChange }: ProjectModalProps) {
     const { language } = useLanguage();
     const t = project.translations[language];
 
-    // Prevent background scrolling when modal is open
+    // Capture mount index to prevent Embla re-initialization on parent updates
+    const [mountIndex] = useState(initialImageIndex);
+
+    const [emblaRef, emblaApi] = useEmblaCarousel({
+        loop: false,
+        align: "center",
+        containScroll: "trimSnaps",
+        startIndex: mountIndex,
+    });
+
+    // Prevent background scrolling
     useEffect(() => {
         document.body.style.overflow = "hidden";
         return () => {
@@ -21,7 +34,23 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         };
     }, []);
 
-    // Use placeholder gradients if no images
+    // Sync Embla state with parent
+    const onSelect = useCallback(() => {
+        if (!emblaApi) return;
+        const index = emblaApi.selectedScrollSnap();
+        onIndexChange(index);
+    }, [emblaApi, onIndexChange]);
+
+    useEffect(() => {
+        if (!emblaApi) return;
+        emblaApi.on("select", onSelect);
+        emblaApi.on("reInit", onSelect);
+        return () => {
+            emblaApi.off("select", onSelect);
+            emblaApi.off("reInit", onSelect);
+        };
+    }, [emblaApi, onSelect]);
+
     const carouselImages =
         project.images && project.images.length > 0
             ? project.images
@@ -30,6 +59,10 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   "bg-gradient-to-bl from-ndark-700 to-ndark-800",
                   "bg-gradient-to-tr from-ndark-800 to-ndark-900",
               ];
+
+    const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+    const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+    const scrollTo = useCallback((index: number) => emblaApi && emblaApi.scrollTo(index), [emblaApi]);
 
     return (
         <div
@@ -52,25 +85,80 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     </Button>
                 </div>
 
-                <div className="shrink-0 aspect-[16/9] w-full relative overflow-hidden bg-ndark-950">
-                    {/* CSS-only Carousel */}
-                    <div className="flex overflow-x-auto snap-x snap-mandatory h-full w-full scrollbar-none">
-                        {carouselImages.map((imgClass, idx) => (
-                            <div
-                                key={idx}
-                                className={`snap-center shrink-0 w-full h-full flex items-center justify-center ${imgClass.startsWith("bg-") ? imgClass : ""} relative`}
-                                style={
-                                    idx === 0
-                                        ? ({ viewTransitionName: `project-${project.id}-image` } as React.CSSProperties)
-                                        : undefined
-                                }
-                            >
-                                {!imgClass.startsWith("bg-") && (
-                                    <img src={imgClass} alt="" className="w-full h-full object-cover" />
-                                )}
-                            </div>
-                        ))}
+                <div className="shrink-0 aspect-[16/9] w-full relative overflow-hidden bg-ndark-950 group/carousel">
+                    <div className="overflow-hidden h-full" ref={emblaRef}>
+                        <div className="flex touch-pan-y h-full">
+                            {carouselImages.map((imgClass, idx) => (
+                                <div
+                                    key={idx}
+                                    className={`shrink-0 flex-[0_0_100%] min-w-0 w-full h-full flex items-center justify-center ${imgClass.startsWith("bg-") ? imgClass : ""} relative`}
+                                    style={
+                                        idx === initialImageIndex
+                                            ? ({
+                                                  viewTransitionName: `project-${project.id}-image`,
+                                              } as React.CSSProperties)
+                                            : undefined
+                                    }
+                                >
+                                    {!imgClass.startsWith("bg-") && (
+                                        <img
+                                            loading="lazy"
+                                            src={imgClass}
+                                            alt=""
+                                            className="w-full h-full object-cover select-none"
+                                        />
+                                    )}
+                                </div>
+                            ))}
+                        </div>
                     </div>
+
+                    {/* Navigation Buttons */}
+                    {carouselImages.length > 1 && (
+                        <>
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    scrollPrev();
+                                }}
+                                disabled={initialImageIndex === 0}
+                                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/30 text-white/70 hover:bg-black/50 hover:text-white backdrop-blur-sm transition-all opacity-0 group-hover/carousel:opacity-100 disabled:opacity-0 disabled:cursor-not-allowed"
+                                aria-label="Previous image"
+                            >
+                                <FaChevronLeft size={20} />
+                            </button>
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    scrollNext();
+                                }}
+                                disabled={initialImageIndex === carouselImages.length - 1}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/30 text-white/70 hover:bg-black/50 hover:text-white backdrop-blur-sm transition-all opacity-0 group-hover/carousel:opacity-100 disabled:opacity-0 disabled:cursor-not-allowed"
+                                aria-label="Next image"
+                            >
+                                <FaChevronRight size={20} />
+                            </button>
+
+                            {/* Dots Indicator */}
+                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 p-2 rounded-full bg-black/20 backdrop-blur-sm z-10">
+                                {carouselImages.map((_, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            scrollTo(idx);
+                                        }}
+                                        className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                                            idx === initialImageIndex
+                                                ? "bg-primary-500"
+                                                : "bg-white/30 hover:bg-white/50"
+                                        }`}
+                                        aria-label={`Go to image ${idx + 1}`}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </div>
 
                 {/* Scrollable Content */}

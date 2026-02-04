@@ -10,20 +10,19 @@ export function Projects() {
     const [selectedId, setSelectedId] = useState<string | null>(null);
     // Track which project is currently "active" for the transition context (clicked or closing)
     const [activeId, setActiveId] = useState<string | null>(null);
+    // Track the active image index for each project to sync Card and Modal
+    const [activeImageIndexes, setActiveImageIndexes] = useState<Record<string, number>>({});
 
     const handleProjectClick = (id: string) => {
         if (selectedId === id) return;
 
-        // 1. Mark this project as active so it gets the unique view-transition-name.
-        // We use flushSync to ensure the DOM updates (applying the name) BEFORE the browser captures the snapshot.
+        // Mark active for transition name assignment before snapshot
         flushSync(() => {
             setActiveId(id);
         });
 
-        // 2. Start the transition.
         if (document.startViewTransition) {
             document.startViewTransition(() => {
-                // 3. Update the state to switch to the modal.
                 flushSync(() => {
                     setSelectedId(id);
                 });
@@ -34,20 +33,24 @@ export function Projects() {
     };
 
     const handleClose = () => {
-        // We capture the document transition if available to handle activeId cleanup
         if (document.startViewTransition) {
             const transition = document.startViewTransition(() => {
                 flushSync(() => {
                     setSelectedId(null);
                 });
             });
-            // Clean up the activeId after the close transition finishes
             transition.finished.then(() => setActiveId(null));
         } else {
-            // Fallback for no View Transition support
             setSelectedId(null);
             setActiveId(null);
         }
+    };
+
+    const handleImageIndexChange = (projectId: string, index: number) => {
+        setActiveImageIndexes((prev) => ({
+            ...prev,
+            [projectId]: index,
+        }));
     };
 
     const selectedProject = PROJECTS.find((p) => p.id === selectedId);
@@ -68,11 +71,19 @@ export function Projects() {
                         viewTransitionName={
                             activeId === project.id && selectedId !== project.id ? `project-${project.id}` : undefined
                         }
+                        activeImageIndex={activeImageIndexes[project.id] || 0}
                     />
                 ))}
             </div>
 
-            {selectedProject && <ProjectModal project={selectedProject} onClose={handleClose} />}
+            {selectedProject && (
+                <ProjectModal
+                    project={selectedProject}
+                    onClose={handleClose}
+                    initialImageIndex={activeImageIndexes[selectedProject.id] || 0}
+                    onIndexChange={(index) => handleImageIndexChange(selectedProject.id, index)}
+                />
+            )}
         </section>
     );
 }
