@@ -1,4 +1,4 @@
-import type { Language } from "@/lib/types";
+import type { Language } from "./types";
 
 export const UI_LABELS: Record<Language, Record<string, string>> = {
     en: {
@@ -10,5 +10,5 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
         "nav.projects": "Projeler",
         "nav.experience": "Deneyim",
         "nav.education": "Eğitim",
-    }
+    },
 };

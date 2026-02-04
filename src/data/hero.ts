@@ -1,4 +1,6 @@
-export const HERO = {
+import type { Hero } from "./types";
+
+export const HERO: Hero = {
     links: {
         github: "https://github.com/UmutSen2662",
         linkedin: "https://linkedin.com/in/umutsen-dev",

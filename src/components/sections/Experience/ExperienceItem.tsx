@@ -1,4 +1,4 @@
-import type { Experience } from "@/lib/types";
+import type { Experience } from "@/data/types";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface ExperienceItemProps {

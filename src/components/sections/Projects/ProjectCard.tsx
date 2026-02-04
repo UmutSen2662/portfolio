@@ -1,4 +1,4 @@
-import type { Project } from "@/lib/types";
+import type { Project } from "@/data/types";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card } from "@/components/ui/Card";
 

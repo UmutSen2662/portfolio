@@ -1,4 +1,4 @@
-import type { Education } from "@/lib/types";
+import type { Education } from "@/data/types";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card } from "@/components/ui/Card";
 import { FaMapMarkerAlt, FaMedal, FaUniversity } from "react-icons/fa";

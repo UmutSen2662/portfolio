@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { UI_LABELS } from "@/data/ui";
-import type { Language } from "@/lib/types";
+import type { Language } from "@/data/types";
 
 interface LanguageContextType {
     language: Language;

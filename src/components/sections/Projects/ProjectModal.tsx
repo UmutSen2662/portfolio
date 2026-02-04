@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import type { Project } from "@/lib/types";
+import type { Project } from "@/data/types";
 import { useLanguage } from "@/context/LanguageContext";
 import { FaExternalLinkAlt, FaGithub, FaTimes } from "react-icons/fa";
 import { Button } from "@/components/ui/Button";

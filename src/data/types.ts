@@ -49,4 +49,23 @@ export interface Education {
     logo?: string;
 }
 
+export interface HeroTranslations {
+    greeting: string;
+    title: string[];
+    description: string;
+    location: string;
+    downloadResume: string;
+    viewProjects: string;
+}
+
+export interface Hero {
+    links: {
+        github: string;
+        linkedin: string;
+        resume: string;
+        email: string;
+    };
+    translations: Record<Language, HeroTranslations>;
+}
+
 export type Language = "en" | "tr";
