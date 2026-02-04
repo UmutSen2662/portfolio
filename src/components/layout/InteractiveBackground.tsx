@@ -16,7 +16,7 @@ export function InteractiveBackground() {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
-        const ctx = canvas.getContext("2d", { alpha: false }); // Optimize for no transparency on canvas background if possible, though we use rgba
+        const ctx = canvas.getContext("2d", { alpha: false });
         if (!ctx) return;
 
         let animationFrameId: number;
@@ -32,6 +32,9 @@ export function InteractiveBackground() {
         const MOUSE_INFLUENCE_RADIUS = 80;
         const HOVER_MOUSE_INFLUENCE_RADIUS = 120;
         const MOUSE_CORE_RADIUS = 16;
+        const PARALLAX_OFFSET = 24;
+        const SCROLL_SPEED = 0.05;
+        const SCROLL_WRAP = DOT_SPACING * 2;
         const ATTRACTOR_INFLUENCE_RADIUS = 40;
 
         const DOT_COLOR = "rgba(183, 134, 0, 0.25)";
@@ -39,7 +42,6 @@ export function InteractiveBackground() {
         const TRANSITION_DURATION = 0.2;
 
         const handleResize = () => {
-            // scale for dpi could go here but let's keep it simple and fast
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         };
@@ -123,16 +125,38 @@ export function InteractiveBackground() {
             const attractorRadiusSq = ATTRACTOR_INFLUENCE_RADIUS * ATTRACTOR_INFLUENCE_RADIUS;
 
             // BATCH 1: GLOW (Simulated by larger, transparent circles)
-            // Only draw glow for dots that are larger than base
+            // Only draw glow for dots that are significantly affected
+
+            // PARALLAX CALCULATION
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const normX = (mouseX - centerX) / centerX;
+            const normY = (mouseY - centerY) / centerY;
+
+            // Scroll Offset
+            const scrollOffsetY = (window.scrollY * SCROLL_SPEED) % SCROLL_WRAP;
+
+            // Move opposite to mouse direction
+            const activeOffsetX = -normX * PARALLAX_OFFSET;
+            const activeOffsetY = -normY * PARALLAX_OFFSET - scrollOffsetY;
+
+            ctx.save();
+            ctx.translate(activeOffsetX, activeOffsetY);
 
             ctx.fillStyle = HOVER_DOT_COLOR;
             ctx.beginPath();
 
-            for (let x = 0; x < canvas.width; x += DOT_SPACING) {
-                for (let y = 0; y < canvas.height; y += DOT_SPACING) {
+            // Expand loop to cover boundaries
+            const EXTRA_MARGIN = SCROLL_WRAP + DOT_SPACING;
+
+            for (let x = -EXTRA_MARGIN; x < canvas.width + EXTRA_MARGIN; x += DOT_SPACING) {
+                for (let y = -EXTRA_MARGIN; y < canvas.height + EXTRA_MARGIN; y += DOT_SPACING) {
                     // --- Radius Calc Start ---
-                    const dx = x - mouseX;
-                    const dy = y - mouseY;
+                    const screenX = x + activeOffsetX;
+                    const screenY = y + activeOffsetY;
+
+                    const dx = screenX - mouseX;
+                    const dy = screenY - mouseY;
                     const distMouseSq = dx * dx + dy * dy;
 
                     let r = DOT_BASE_RADIUS;
@@ -165,18 +189,19 @@ export function InteractiveBackground() {
 
                     for (const rect of activeAttractors) {
                         // Quick bounding box check before expensive distance
+                        // Use screen coordinates for checking against clientRects
                         if (
-                            x < rect.left - ATTRACTOR_INFLUENCE_RADIUS ||
-                            x > rect.right + ATTRACTOR_INFLUENCE_RADIUS ||
-                            y < rect.top - ATTRACTOR_INFLUENCE_RADIUS ||
-                            y > rect.bottom + ATTRACTOR_INFLUENCE_RADIUS
+                            screenX < rect.left - ATTRACTOR_INFLUENCE_RADIUS ||
+                            screenX > rect.right + ATTRACTOR_INFLUENCE_RADIUS ||
+                            screenY < rect.top - ATTRACTOR_INFLUENCE_RADIUS ||
+                            screenY > rect.bottom + ATTRACTOR_INFLUENCE_RADIUS
                         ) {
                             continue;
                         }
 
-                        const clampedX = Math.max(rect.left, Math.min(x, rect.right));
-                        const clampedY = Math.max(rect.top, Math.min(y, rect.bottom));
-                        const distAttractorSq = (x - clampedX) ** 2 + (y - clampedY) ** 2;
+                        const clampedX = Math.max(rect.left, Math.min(screenX, rect.right));
+                        const clampedY = Math.max(rect.top, Math.min(screenY, rect.bottom));
+                        const distAttractorSq = (screenX - clampedX) ** 2 + (screenY - clampedY) ** 2;
 
                         if (distAttractorSq < attractorRadiusSq) {
                             const distAttractor = Math.sqrt(distAttractorSq);
@@ -208,17 +233,16 @@ export function InteractiveBackground() {
             ctx.fillStyle = DOT_COLOR;
             ctx.beginPath();
 
-            // We repeat the loop.
-            // NOTE: Ideally we'd store 'r' in a temporary array to avoid recalculating.
-            // However, allocating a massive array every frame is also expensive (GC).
-            // Recalculating simple math is often cheaper than memory allocation in JS.
-            // Given < 2000 dots, re-calc is fine.
-
-            for (let x = 0; x < canvas.width; x += DOT_SPACING) {
-                for (let y = 0; y < canvas.height; y += DOT_SPACING) {
+            // Repeat loop for core dots
+            // Reuse EXTRA_MARGIN from batch 1
+            for (let x = -EXTRA_MARGIN; x < canvas.width + EXTRA_MARGIN; x += DOT_SPACING) {
+                for (let y = -EXTRA_MARGIN; y < canvas.height + EXTRA_MARGIN; y += DOT_SPACING) {
                     // --- Radius Calc Start (Repeat) ---
-                    const dx = x - mouseX;
-                    const dy = y - mouseY;
+                    const screenX = x + activeOffsetX;
+                    const screenY = y + activeOffsetY;
+
+                    const dx = screenX - mouseX;
+                    const dy = screenY - mouseY;
                     const distMouseSq = dx * dx + dy * dy;
 
                     let r = DOT_BASE_RADIUS;
@@ -245,16 +269,16 @@ export function InteractiveBackground() {
                     for (const rect of activeAttractors) {
                         // Quick bounding box check
                         if (
-                            x < rect.left - ATTRACTOR_INFLUENCE_RADIUS ||
-                            x > rect.right + ATTRACTOR_INFLUENCE_RADIUS ||
-                            y < rect.top - ATTRACTOR_INFLUENCE_RADIUS ||
-                            y > rect.bottom + ATTRACTOR_INFLUENCE_RADIUS
+                            screenX < rect.left - ATTRACTOR_INFLUENCE_RADIUS ||
+                            screenX > rect.right + ATTRACTOR_INFLUENCE_RADIUS ||
+                            screenY < rect.top - ATTRACTOR_INFLUENCE_RADIUS ||
+                            screenY > rect.bottom + ATTRACTOR_INFLUENCE_RADIUS
                         ) {
                             continue;
                         }
-                        const clampedX = Math.max(rect.left, Math.min(x, rect.right));
-                        const clampedY = Math.max(rect.top, Math.min(y, rect.bottom));
-                        const distAttractorSq = (x - clampedX) ** 2 + (y - clampedY) ** 2;
+                        const clampedX = Math.max(rect.left, Math.min(screenX, rect.right));
+                        const clampedY = Math.max(rect.top, Math.min(screenY, rect.bottom));
+                        const distAttractorSq = (screenX - clampedX) ** 2 + (screenY - clampedY) ** 2;
 
                         if (distAttractorSq < attractorRadiusSq) {
                             const distAttractor = Math.sqrt(distAttractorSq);
@@ -271,6 +295,7 @@ export function InteractiveBackground() {
                 }
             }
             ctx.fill();
+            ctx.restore();
 
             animationFrameId = requestAnimationFrame(render);
         };
