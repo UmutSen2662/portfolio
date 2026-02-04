@@ -27,7 +27,7 @@ export function Hero() {
     return (
         <section
             id="hero"
-            className="min-h-[calc(100dvh-5rem)] flex flex-col items-center justify-center text-center gap-6 relative z-10"
+            className="min-h-[calc(100vh-5rem)] flex flex-col items-center justify-center text-center gap-6 relative z-10"
         >
             {/* Top: Small Greeting */}
             <p className="text-2xl md:text-2xl text-nlight-200 font-medium tracking-wide">{t.greeting}</p>
