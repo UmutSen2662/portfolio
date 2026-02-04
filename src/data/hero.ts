@@ -8,16 +8,16 @@ export const HERO = {
     translations: {
         en: {
             greeting: "Hi, I'm Umut",
-            title: "Full-Stack Developer",
-            description: "React, Node.js & TypeScript | METU High Honors (3.8 GPA)",
+            title: ["Full-Stack", "Engineer"],
+            description: "Specializing in React & Node.js | METU High Honors (3.8 GPA)",
             location: "Based in Denizli, Turkey 🇹🇷",
             downloadResume: "Download Resume",
             viewProjects: "View Projects",
         },
         tr: {
             greeting: "Merhaba, Ben Umut",
-            title: "Full-Stack Geliştirici",
-            description: "React, Node.js & TypeScript | ODTÜ Yüksek Şeref (3.8 GPA)",
+            title: ["Full-Stack", "Mühendis"],
+            description: "React & Node.js odaklı | ODTÜ Yüksek Şeref (3.8 GPA)",
             location: "Denizli, Türkiye 🇹🇷",
             downloadResume: "CV İndir",
             viewProjects: "Projelerim",

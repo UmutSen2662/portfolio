@@ -22,7 +22,14 @@ export function ProjectCard({ project, onClick, isSelected, viewTransitionName }
             <div className={!isSelected ? "contents" : "opacity-0"}>
                 <div className="flex flex-col gap-6">
                     {/* Preview Area */}
-                    <div className="aspect-[16/9] w-full bg-ndark-900/50 rounded-lg flex items-center justify-center border border-nlight-200/5 overflow-hidden relative">
+                    <div
+                        className="aspect-[16/9] w-full bg-ndark-900/50 rounded-lg flex items-center justify-center border border-nlight-200/5 overflow-hidden relative"
+                        style={
+                            viewTransitionName
+                                ? ({ viewTransitionName: `${viewTransitionName}-image` } as React.CSSProperties)
+                                : undefined
+                        }
+                    >
                         {/* Placeholder content - use first image if available, else gradient/fallback */}
                         {project.images && project.images[0] ? (
                             <div className="absolute inset-0">

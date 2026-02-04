@@ -23,13 +23,8 @@ export const PROJECTS: Project[] = [
         images: ["https://placehold.co/1920x1080"],
         links: [
             {
-                title: "View Live",
-                url: "",
-                icon: "external",
-            },
-            {
                 title: "Source Code",
-                url: "",
+                url: "https://github.com/UmutSen2662/bare-metal-paas",
                 icon: "github",
             },
         ],
@@ -57,12 +52,12 @@ export const PROJECTS: Project[] = [
         links: [
             {
                 title: "View Live",
-                url: "",
+                url: "https://chatapp.umutsen.dev",
                 icon: "external",
             },
             {
                 title: "Source Code",
-                url: "",
+                url: "https://github.com/UmutSen2662/chat-app",
                 icon: "github",
             },
         ],
@@ -90,13 +85,8 @@ export const PROJECTS: Project[] = [
         links: [
             {
                 title: "View Live",
-                url: "",
+                url: "https://usrc.vercel.app",
                 icon: "external",
-            },
-            {
-                title: "Source Code",
-                url: "",
-                icon: "github",
             },
         ],
     },
@@ -123,12 +113,12 @@ export const PROJECTS: Project[] = [
         links: [
             {
                 title: "View Live",
-                url: "",
+                url: "https://mono.umutsen.dev",
                 icon: "external",
             },
             {
                 title: "Source Code",
-                url: "",
+                url: "https://github.com/UmutSen2662/mono",
                 icon: "github",
             },
         ],
@@ -154,8 +144,8 @@ export const PROJECTS: Project[] = [
         technologies: ["Svelte", "Supabase", "Vite", "PWA", "JavaScript"],
         images: ["https://placehold.co/1920x1080"],
         links: [
-            { title: "View Live", url: "", icon: "external" },
-            { title: "Source Code", url: "", icon: "github" },
+            { title: "View Live", url: "https://scheduler.umutsen.dev", icon: "external" },
+            { title: "Source Code", url: "https://github.com/UmutSen2662/scheduler", icon: "github" },
         ],
     },
     {
@@ -181,12 +171,12 @@ export const PROJECTS: Project[] = [
         links: [
             {
                 title: "View Live",
-                url: "https://metugpacalculator.pythonanywhere.com/",
+                url: "https://metugpacalculator.pythonanywhere.com",
                 icon: "external",
             },
             {
                 title: "Source Code",
-                url: "",
+                url: "https://github.com/UmutSen2662/METU-GPA-Calculator",
                 icon: "github",
             },
         ],

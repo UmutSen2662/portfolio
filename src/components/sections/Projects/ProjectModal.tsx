@@ -1,6 +1,7 @@
+import { useEffect } from "react";
 import type { Project } from "@/lib/types";
 import { useLanguage } from "@/context/LanguageContext";
-import { FaTimes } from "react-icons/fa";
+import { FaExternalLinkAlt, FaGithub, FaTimes } from "react-icons/fa";
 import { Button } from "@/components/ui/Button";
 
 interface ProjectModalProps {
@@ -11,6 +12,14 @@ interface ProjectModalProps {
 export function ProjectModal({ project, onClose }: ProjectModalProps) {
     const { language } = useLanguage();
     const t = project.translations[language];
+
+    // Prevent background scrolling when modal is open
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+        return () => {
+            document.body.style.overflow = "unset";
+        };
+    }, []);
 
     // Use placeholder gradients if no images
     const carouselImages =
@@ -50,6 +59,11 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                             <div
                                 key={idx}
                                 className={`snap-center shrink-0 w-full h-full flex items-center justify-center ${imgClass.startsWith("bg-") ? imgClass : ""} relative`}
+                                style={
+                                    idx === 0
+                                        ? ({ viewTransitionName: `project-${project.id}-image` } as React.CSSProperties)
+                                        : undefined
+                                }
                             >
                                 {!imgClass.startsWith("bg-") && (
                                     <img src={imgClass} alt="" className="w-full h-full object-cover" />
@@ -70,17 +84,17 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                                 {project.links && project.links.length > 0 && (
                                     <div className="flex flex-wrap gap-4 items-center">
                                         {project.links.map((link) => (
-                                            <Button
+                                            <a
                                                 key={link.title}
                                                 href={link.url}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                variant="outline"
-                                                size="sm"
-                                                className="gap-2"
+                                                className="text-nlight-200 hover:text-nlight-100 flex items-center gap-2"
                                             >
-                                                {link.title}
-                                            </Button>
+                                                <span className="hover:underline">{link.title}</span>
+                                                {link.icon == "github" && <FaGithub size={20} />}
+                                                {link.icon == "external" && <FaExternalLinkAlt size={18} />}
+                                            </a>
                                         ))}
                                     </div>
                                 )}

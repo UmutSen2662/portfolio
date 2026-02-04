@@ -8,7 +8,7 @@ export function Experience() {
     const containerRef = useRef<HTMLDivElement>(null);
 
     return (
-        <section id="experience" className="flex flex-col pt-12 gap-8" ref={containerRef}>
+        <section id="experience" className="flex flex-col pt-6 mt-18 gap-8" ref={containerRef}>
             <h2 className="text-2xl font-bold flex items-center gap-2">
                 <span className="text-primary-400">/</span> {t("nav.experience")}
             </h2>

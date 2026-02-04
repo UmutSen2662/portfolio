@@ -6,7 +6,7 @@ export function Education() {
     const { t } = useLanguage();
 
     return (
-        <section id="education" className="flex flex-col gap-4 pt-12">
+        <section id="education" className="flex flex-col gap-4 pt-6">
             <h2 className="text-2xl font-bold flex items-center gap-2">
                 <span className="text-primary-400">/</span> {t("nav.education")}
             </h2>

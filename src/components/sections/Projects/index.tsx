@@ -5,8 +5,6 @@ import { flushSync } from "react-dom";
 import { ProjectCard } from "./ProjectCard";
 import { ProjectModal } from "./ProjectModal";
 
-// Helper removed as inline checks are used
-
 export function Projects() {
     const { t } = useLanguage();
     const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -55,7 +53,7 @@ export function Projects() {
     const selectedProject = PROJECTS.find((p) => p.id === selectedId);
 
     return (
-        <section id="projects" className="flex flex-col pt-12 gap-8 relative">
+        <section id="projects" className="flex flex-col pt-6 mt-18 gap-8 relative">
             <h2 className="text-2xl font-bold flex items-center gap-2">
                 <span className="text-primary-400">/</span> {t("nav.projects")}
             </h2>

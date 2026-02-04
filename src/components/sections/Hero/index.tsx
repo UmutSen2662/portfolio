@@ -27,20 +27,20 @@ export function Hero() {
     return (
         <section
             id="hero"
-            className="min-h-[60vh] flex flex-col items-center justify-center text-center gap-6 py-20 relative z-10"
+            className="min-h-[calc(100dvh-5rem)] flex flex-col items-center justify-center text-center gap-6 relative z-10"
         >
             {/* Top: Small Greeting */}
-            <p className="text-xl md:text-2xl text-nlight-200 font-medium tracking-wide">{t.greeting}</p>
+            <p className="text-2xl md:text-2xl text-nlight-200 font-medium tracking-wide">{t.greeting}</p>
 
             {/* Middle: Huge H1 (Attractor) */}
             <div className="relative w-fit mx-auto">
                 <h1 className="flex flex-col items-center leading-tight">
-                    {t.title.split(" ").map((word, index) => (
+                    {t.title.map((line, index) => (
                         <span
                             key={index}
                             className="text-5xl md:text-7xl lg:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-r from-nlight-100/90 to-nlight-100/70 pb-2"
                         >
-                            {word}
+                            {line}
                         </span>
                     ))}
                 </h1>
@@ -48,7 +48,7 @@ export function Hero() {
             </div>
 
             {/* Bottom: Medium Subtitle */}
-            <p className="text-lg md:text-2xl text-nlight-300 max-w-2xl font-light">{t.description}</p>
+            <p className="text-lg md:text-xl text-nlight-300 max-w-2xl font-light">{t.description}</p>
 
             {/* Footer of Hero: Location */}
             <p className="text-base text-nlight-400 opacity-80 mt-2">{t.location}</p>
@@ -57,7 +57,9 @@ export function Hero() {
             <div className="flex flex-col md:flex-row items-center gap-6 mt-8">
                 {/* Primary CTA - View Projects (Hover Strategy) */}
                 <Button
-                    href="#projects"
+                    onClick={() => {
+                        document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+                    }}
                     variant="default"
                     size="lg"
                     className="gap-2 active:scale-95"

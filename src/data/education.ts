@@ -5,7 +5,7 @@ export const EDUCATION: Education[] = [
         id: "metu-cs",
         translations: {
             en: {
-                degree: "Bachelor of Science in Computer Engineering",
+                degree: "B.S. in Computer Engineering",
                 institution: "Middle East Technical University",
                 honors: "High Honors",
                 location: "North Cyprus Campus, TRNC",

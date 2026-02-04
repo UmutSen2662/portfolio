@@ -5,6 +5,7 @@ import { InteractiveBackground } from "@/components/layout/InteractiveBackground
 import { Education } from "@/components/sections/Education";
 import { Experience } from "@/components/sections/Experience";
 import { Projects } from "@/components/sections/Projects";
+import { BackToTop } from "@/components/ui/BackToTop";
 
 function App() {
     // const { t } = useLanguage(); // Removed unused t
@@ -12,7 +13,7 @@ function App() {
     return (
         <CanvasProvider>
             <InteractiveBackground />
-            <div className="max-w-3xl mx-auto transition-all duration-200">
+            <div className="max-w-3xl mx-auto transition-all duration-200 mb-20 sm:mb-10">
                 <Navbar />
 
                 <main className="flex flex-col mx-4 pb-20">
@@ -25,6 +26,7 @@ function App() {
                     <Projects />
                 </main>
             </div>
+            <BackToTop />
         </CanvasProvider>
     );
 }
