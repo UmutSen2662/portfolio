@@ -14,7 +14,7 @@ export function Experience() {
                 <span className="text-primary-400">/</span> {t("nav.experience")}
             </h2>
 
-            <div className="relative pl-4 sm:pl-0">
+            <div className="relative">
                 {/* Vertical Line */}
                 <div
                     className="absolute left-2 sm:left-[22px] top-2 bottom-6 w-[3px] bg-gradient-to-b from-ndark-600 via-ndark-600 to-transparent"
