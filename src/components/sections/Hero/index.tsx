@@ -27,10 +27,10 @@ export function Hero() {
     return (
         <section
             id="hero"
-            className="min-h-[calc(100vh-5rem)] flex flex-col items-center justify-center text-center gap-6 relative z-10"
+            className="min-h-[calc(100vh-5rem)] py-20 flex flex-col items-center justify-center text-center gap-6 relative z-10"
         >
             {/* Top: Small Greeting */}
-            <p className="text-2xl md:text-2xl text-nlight-200 font-medium tracking-wide">{t.greeting}</p>
+            <p className="text-2xl md:text-3xl text-nlight-200 font-medium tracking-wide">{t.greeting}</p>
 
             {/* Middle: Huge H1 (Attractor) */}
             <div className="relative w-fit mx-auto">
@@ -38,7 +38,7 @@ export function Hero() {
                     {t.title.map((line, index) => (
                         <span
                             key={index}
-                            className="text-5xl md:text-7xl lg:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-r from-nlight-100/90 to-nlight-100/70 pb-2"
+                            className="text-5xl md:text-7xl lg:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-r from-nlight-100/90 to-nlight-100/70 pb-4"
                         >
                             {line}
                         </span>

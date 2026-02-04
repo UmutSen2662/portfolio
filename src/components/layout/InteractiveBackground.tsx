@@ -26,15 +26,16 @@ export function InteractiveBackground() {
         // Configuration
         const DOT_SPACING = 36;
         const DOT_BASE_RADIUS = 4;
-        const BASE_MAX_RADIUS = 8;
-        const HOVER_MAX_RADIUS = 12;
+        const BASE_MAX_RADIUS = 6;
+        const HOVER_MAX_RADIUS = 10;
 
         const MOUSE_INFLUENCE_RADIUS = 80;
         const HOVER_MOUSE_INFLUENCE_RADIUS = 120;
+        const MOUSE_CORE_RADIUS = 16;
         const ATTRACTOR_INFLUENCE_RADIUS = 40;
 
         const DOT_COLOR = "rgba(183, 134, 0, 0.25)";
-        const HOVER_DOT_COLOR = "rgba(183, 134, 0, 0.2)"; // Lower opacity for glow since it's additive
+        const HOVER_DOT_COLOR = "rgba(183, 134, 0, 0.2)";
         const TRANSITION_DURATION = 0.2;
 
         const handleResize = () => {
@@ -135,11 +136,31 @@ export function InteractiveBackground() {
                     const distMouseSq = dx * dx + dy * dy;
 
                     let r = DOT_BASE_RADIUS;
+                    let maxGrowth = 0;
 
                     if (distMouseSq < currentMouseRadiusSq) {
                         const distMouse = Math.sqrt(distMouseSq);
-                        const growth = 1 - distMouse / currentMouseRadius;
-                        r += (currentMaxRadius - DOT_BASE_RADIUS) * growth;
+
+                        // Core Radius Logic (Shelf)
+                        if (distMouse < MOUSE_CORE_RADIUS) {
+                            // Inside core radius: 100% influence
+                            const growth = 1.0;
+                            r += (currentMaxRadius - DOT_BASE_RADIUS) * growth;
+                            maxGrowth = Math.max(maxGrowth, growth);
+                        } else {
+                            // Outside core radius: Falloff over remaining distance
+                            // effectively mapping [core...max] to [1...0]
+                            const effectiveDist = distMouse - MOUSE_CORE_RADIUS;
+                            const effectiveMaxRadius = currentMouseRadius - MOUSE_CORE_RADIUS;
+
+                            // Check to avoid division by zero or negative ranges if core > max (unlikely configuration)
+                            if (effectiveMaxRadius > 0) {
+                                const linearGrowth = 1 - Math.min(effectiveDist / effectiveMaxRadius, 1);
+                                const growth = linearGrowth * linearGrowth; // Quadratic
+                                r += (currentMaxRadius - DOT_BASE_RADIUS) * growth;
+                                maxGrowth = Math.max(maxGrowth, growth);
+                            }
+                        }
                     }
 
                     for (const rect of activeAttractors) {
@@ -159,18 +180,23 @@ export function InteractiveBackground() {
 
                         if (distAttractorSq < attractorRadiusSq) {
                             const distAttractor = Math.sqrt(distAttractorSq);
-                            const growth = 1 - distAttractor / ATTRACTOR_INFLUENCE_RADIUS;
+                            const linearGrowth = 1 - distAttractor / ATTRACTOR_INFLUENCE_RADIUS;
+                            const growth = linearGrowth * linearGrowth; // Quadratic
                             const attractorSize = DOT_BASE_RADIUS + (BASE_MAX_RADIUS - DOT_BASE_RADIUS) * growth * 1.2;
-                            r = Math.max(r, attractorSize);
+
+                            if (attractorSize > r) {
+                                r = attractorSize;
+                                maxGrowth = Math.max(maxGrowth, growth);
+                            }
                         }
                     }
                     // --- Radius Calc End ---
 
-                    // Only Add to Glow Path if significant size
-                    if (r > DOT_BASE_RADIUS + 0.2) {
-                        // Move to avoid connecting lines
-                        // Draw larger for glow
-                        const glowR = r * 1.5;
+                    // Only Add to Glow Path if there is some significant growth
+                    if (maxGrowth > 0.01) {
+                        // Dynamic Glow Expansion
+                        const glowMultiplier = 1.0 + maxGrowth * 1.5;
+                        const glowR = r * glowMultiplier;
                         ctx.moveTo(x + glowR, y);
                         ctx.arc(x, y, glowR, 0, PI2);
                     }
@@ -199,8 +225,21 @@ export function InteractiveBackground() {
 
                     if (distMouseSq < currentMouseRadiusSq) {
                         const distMouse = Math.sqrt(distMouseSq);
-                        const growth = 1 - distMouse / currentMouseRadius;
-                        r += (currentMaxRadius - DOT_BASE_RADIUS) * growth;
+
+                        // Core Radius Logic (Shelf) - Repeat for core pass
+                        if (distMouse < MOUSE_CORE_RADIUS) {
+                            const growth = 1.0; // 100%
+                            r += (currentMaxRadius - DOT_BASE_RADIUS) * growth;
+                        } else {
+                            const effectiveDist = distMouse - MOUSE_CORE_RADIUS;
+                            const effectiveMaxRadius = currentMouseRadius - MOUSE_CORE_RADIUS;
+
+                            if (effectiveMaxRadius > 0) {
+                                const linearGrowth = 1 - Math.min(effectiveDist / effectiveMaxRadius, 1);
+                                const growth = linearGrowth * linearGrowth; // Quadratic
+                                r += (currentMaxRadius - DOT_BASE_RADIUS) * growth;
+                            }
+                        }
                     }
 
                     for (const rect of activeAttractors) {
@@ -219,7 +258,8 @@ export function InteractiveBackground() {
 
                         if (distAttractorSq < attractorRadiusSq) {
                             const distAttractor = Math.sqrt(distAttractorSq);
-                            const growth = 1 - distAttractor / ATTRACTOR_INFLUENCE_RADIUS;
+                            const linearGrowth = 1 - distAttractor / ATTRACTOR_INFLUENCE_RADIUS;
+                            const growth = linearGrowth * linearGrowth; // Quadratic
                             const attractorSize = DOT_BASE_RADIUS + (BASE_MAX_RADIUS - DOT_BASE_RADIUS) * growth * 1.2;
                             r = Math.max(r, attractorSize);
                         }

@@ -13,7 +13,7 @@ function App() {
     return (
         <CanvasProvider>
             <InteractiveBackground />
-            <div className="max-w-3xl mx-auto transition-all duration-200 mb-20 sm:mb-10">
+            <div className="max-w-3xl mx-auto transition-all duration-200 mb-24 sm:mb-12">
                 <Navbar />
 
                 <main className="flex flex-col mx-4 pb-20">
