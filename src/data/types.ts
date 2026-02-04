@@ -6,11 +6,13 @@ export interface ProjectLink {
     url: Poly<string>;
     icon?: "github" | "external";
     labelKey?: string;
+    title?: Poly<string>;
 }
 
 export interface ResolvedProjectLink {
     url: string;
     icon?: "github" | "external";
+    title?: string;
 }
 
 export interface Project {

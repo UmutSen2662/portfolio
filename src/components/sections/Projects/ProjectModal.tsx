@@ -169,13 +169,13 @@ export function ProjectModal({ project, onClose, initialImageIndex, onIndexChang
                                     <div className="flex flex-wrap gap-4 items-center">
                                         {project.links.map((link) => (
                                             <a
-                                                key={link.title}
+                                                key={link.url}
                                                 href={link.url}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                className="text-nlight-200 hover:text-nlight-100 flex items-center gap-2"
+                                                className="text-nlight-200 hover:text-nlight-100 flex items-center gap-2 group"
                                             >
-                                                <span className="hover:underline">{link.title}</span>
+                                                <span className="group-hover:underline">{link.title}</span>
                                                 {link.icon == "github" && <FaGithub size={20} />}
                                                 {link.icon == "external" && <FaExternalLinkAlt size={18} />}
                                             </a>
