@@ -1,21 +1,17 @@
 import { useEffect, useCallback, useState } from "react";
-import type { Project } from "@/data/types";
-import { useLanguage } from "@/context/LanguageContext";
+import type { ResolvedProject } from "@/data/types";
 import { FaExternalLinkAlt, FaGithub, FaTimes, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Button } from "@/components/ui/Button";
 import useEmblaCarousel from "embla-carousel-react";
 
 interface ProjectModalProps {
-    project: Project;
+    project: ResolvedProject;
     onClose: () => void;
     initialImageIndex: number;
     onIndexChange: (index: number) => void;
 }
 
 export function ProjectModal({ project, onClose, initialImageIndex, onIndexChange }: ProjectModalProps) {
-    const { language } = useLanguage();
-    const t = project.translations[language];
-
     // Capture mount index to prevent Embla re-initialization on parent updates
     const [mountIndex] = useState(initialImageIndex);
 
@@ -166,7 +162,7 @@ export function ProjectModal({ project, onClose, initialImageIndex, onIndexChang
                     <div className="p-8 flex flex-col gap-8">
                         <div className="flex flex-col gap-4">
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                                <h3 className="text-3xl font-bold text-nlight-100">{t.title}</h3>
+                                <h3 className="text-3xl font-bold text-nlight-100">{project.title}</h3>
 
                                 {/* Dynamic Links - Right Aligned, Horizontal, Simple Text */}
                                 {project.links && project.links.length > 0 && (
@@ -189,7 +185,7 @@ export function ProjectModal({ project, onClose, initialImageIndex, onIndexChang
                             </div>
 
                             <div className="flex flex-wrap gap-2">
-                                {project.technologies.map((tech) => (
+                                {project.technologies.slice(0, 5).map((tech) => (
                                     <span
                                         key={tech}
                                         className="px-2.5 py-1 text-xs font-mono text-primary-400 bg-primary-900/10 border border-primary-500/20 rounded-md transition-colors hover:bg-primary-900/20 hover:border-primary-500/30"
@@ -201,7 +197,9 @@ export function ProjectModal({ project, onClose, initialImageIndex, onIndexChang
                         </div>
 
                         <div className="prose prose-invert max-w-none text-nlight-200">
-                            <p className="text-lg leading-relaxed">{t.detailedDescription || t.description}</p>
+                            <p className="text-lg leading-relaxed">
+                                {project.detailedDescription || project.description}
+                            </p>
                         </div>
                     </div>
                 </div>

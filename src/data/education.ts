@@ -3,20 +3,10 @@ import type { Education } from "./types";
 export const EDUCATION: Education[] = [
     {
         id: "metu-cs",
-        translations: {
-            en: {
-                degree: "B.S. in Computer Engineering",
-                institution: "Middle East Technical University",
-                honors: "High Honors",
-                location: "North Cyprus Campus, TRNC",
-            },
-            tr: {
-                degree: "Bilgisayar Mühendisliği Lisansı",
-                institution: "Orta Doğu Teknik Üniversitesi",
-                honors: "Yüksek Şeref",
-                location: "Kuzey Kıbrıs Kampüsü, KKTC",
-            },
-        },
+        degree: { en: "B.S. in Computer Engineering", tr: "Bilgisayar Mühendisliği Lisansı" },
+        institution: { en: "Middle East Technical University", tr: "Orta Doğu Teknik Üniversitesi" },
+        honors: { en: "High Honors", tr: "Yüksek Şeref" },
+        location: { en: "North Cyprus Campus, TRNC", tr: "Kuzey Kıbrıs Kampüsü, KKTC" },
         startDate: "2021",
         endDate: "2026",
         gpa: "3.8",

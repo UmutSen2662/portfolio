@@ -1,9 +1,10 @@
-import { EDUCATION } from "@/data/education";
+import { useData } from "@/hooks/useData";
 import { useLanguage } from "@/context/LanguageContext";
 import { EducationCard } from "./EducationCard";
 
 export function Education() {
     const { t } = useLanguage();
+    const { education } = useData();
 
     return (
         <section id="education" className="flex flex-col gap-4 pt-6">
@@ -12,7 +13,7 @@ export function Education() {
             </h2>
 
             <div className="flex flex-col gap-4">
-                {EDUCATION.map((edu) => (
+                {education.map((edu) => (
                     <EducationCard key={edu.id} education={edu} />
                 ))}
             </div>

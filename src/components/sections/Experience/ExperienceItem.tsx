@@ -1,14 +1,10 @@
-import type { Experience } from "@/data/types";
-import { useLanguage } from "@/context/LanguageContext";
+import type { ResolvedExperience } from "@/data/types";
 
 interface ExperienceItemProps {
-    experience: Experience;
+    experience: ResolvedExperience;
 }
 
 export function ExperienceItem({ experience }: ExperienceItemProps) {
-    const { language } = useLanguage();
-    const t = experience.translations[language];
-
     return (
         <div className="relative pl-10 sm:pl-16 group">
             {/* Timeline Node */}
@@ -20,7 +16,7 @@ export function ExperienceItem({ experience }: ExperienceItemProps) {
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 sm:gap-4">
                     <div className="flex flex-col gap-1">
                         <h3 className="text-xl font-bold text-primary-400">{experience.company}</h3>
-                        <h4 className="text-lg font-bold text-nlight-100">{t.role}</h4>
+                        <h4 className="text-lg font-bold text-nlight-100">{experience.role}</h4>
                     </div>
 
                     <div className="self-start text-xs font-mono text-nlight-300 bg-ndark-800/80 border border-ndark-700 rounded px-3 py-1.5 whitespace-nowrap">
@@ -29,15 +25,7 @@ export function ExperienceItem({ experience }: ExperienceItemProps) {
                 </div>
 
                 <div className="text-nlight-300 text-base leading-relaxed max-w-2xl">
-                    <p>{t.description}</p>
-
-                    {t.achievements && (
-                        <ul className="mt-3 flex flex-col gap-1 list-disc list-inside text-sm text-nlight-400 marker:text-primary-500/70">
-                            {t.achievements.map((achievement, i) => (
-                                <li key={i}>{achievement}</li>
-                            ))}
-                        </ul>
-                    )}
+                    <p>{experience.description}</p>
 
                     {experience.technologies && (
                         <div className="mt-4 flex flex-wrap gap-2">

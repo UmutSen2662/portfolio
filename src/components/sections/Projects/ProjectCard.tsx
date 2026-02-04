@@ -1,9 +1,8 @@
-import type { Project } from "@/data/types";
-import { useLanguage } from "@/context/LanguageContext";
+import type { ResolvedProject } from "@/data/types";
 import { Card } from "@/components/ui/Card";
 
 interface ProjectCardProps {
-    project: Project;
+    project: ResolvedProject;
     onClick: () => void;
     isSelected: boolean;
     viewTransitionName?: string;
@@ -11,9 +10,6 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, onClick, isSelected, viewTransitionName, activeImageIndex }: ProjectCardProps) {
-    const { language } = useLanguage();
-    const t = project.translations[language];
-
     // Determine which image to show based on the propagated state
     // Default to the first image if the index is out of bounds or images array is empty
     const displayImage = project.images && project.images[activeImageIndex] ? project.images[activeImageIndex] : null;
@@ -53,9 +49,9 @@ export function ProjectCard({ project, onClick, isSelected, viewTransitionName, 
 
                     <div className="flex flex-col gap-3">
                         <h3 className="text-2xl font-bold text-nlight-100 group-hover:text-primary-400 transition-colors">
-                            {t.title}
+                            {project.title}
                         </h3>
-                        <p className="text-nlight-300 text-sm leading-relaxed line-clamp-3">{t.description}</p>
+                        <p className="text-nlight-300 text-sm leading-relaxed line-clamp-3">{project.description}</p>
                     </div>
                 </div>
 

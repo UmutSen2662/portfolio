@@ -1,10 +1,11 @@
-import { EXPERIENCE } from "@/data/experience";
+import { useData } from "@/hooks/useData";
 import { useLanguage } from "@/context/LanguageContext";
 import { useRef } from "react";
 import { ExperienceItem } from "./ExperienceItem";
 
 export function Experience() {
     const { t } = useLanguage();
+    const { experience } = useData();
     const containerRef = useRef<HTMLDivElement>(null);
 
     return (
@@ -21,7 +22,7 @@ export function Experience() {
                 />
 
                 <div className="flex flex-col gap-12">
-                    {EXPERIENCE.map((exp) => (
+                    {experience.map((exp) => (
                         <ExperienceItem key={exp.id} experience={exp} />
                     ))}
                 </div>

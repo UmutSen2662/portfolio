@@ -1,71 +1,108 @@
-// Translatable content interfaces
-export interface ProjectTranslations {
+import type { Poly } from "@/lib/localization";
+
+export type Language = "en" | "tr";
+
+export interface ProjectLink {
+    url: Poly<string>;
+    icon?: "github" | "external";
+    labelKey?: string;
+}
+
+export interface ResolvedProjectLink {
+    url: string;
+    icon?: "github" | "external";
+}
+
+export interface Project {
+    id: string;
+    title: Poly<string>;
+    description: Poly<string>;
+    detailedDescription?: Poly<string>;
+    technologies: Poly<string[]>;
+    images?: string[];
+    links?: Poly<ProjectLink[]>;
+}
+
+export interface ResolvedProject {
+    id: string;
     title: string;
     description: string;
     detailedDescription?: string;
-}
-
-export interface ExperienceTranslations {
-    role: string;
-    description: string;
-    achievements?: string[];
-}
-
-export interface EducationTranslations {
-    degree: string;
-    institution: string;
-    location: string;
-    honors: string;
-}
-
-// Main data interfaces with hybrid structure
-export interface Project {
-    id: string;
-    translations: Record<Language, ProjectTranslations>;
     technologies: string[];
     images?: string[];
-    links?: {
-        title: string;
-        url: string;
-        icon?: "github" | "external";
-    }[];
+    links?: ResolvedProjectLink[];
 }
 
 export interface Experience {
     id: string;
-    translations: Record<Language, ExperienceTranslations>;
     company: string;
+    role: Poly<string>;
+    startDate: Poly<string>;
+    endDate: Poly<string>;
+    description: Poly<string>;
+    technologies?: string[];
+}
+
+export interface ResolvedExperience {
+    id: string;
+    company: string;
+    role: string;
     startDate: string;
     endDate: string;
+    description: string;
     technologies?: string[];
 }
 
 export interface Education {
     id: string;
-    translations: Record<Language, EducationTranslations>;
+    institution: Poly<string>;
+    degree: Poly<string>;
+    startDate: Poly<string>;
+    endDate: Poly<string>;
+    gpa?: Poly<string>;
+    location: Poly<string>;
+    logo?: string;
+    honors?: Poly<string>;
+}
+
+export interface ResolvedEducation {
+    id: string;
+    institution: string;
+    degree: string;
     startDate: string;
     endDate: string;
     gpa?: string;
-    logo?: string;
-}
-
-export interface HeroTranslations {
-    greeting: string;
-    title: string[];
-    description: string;
     location: string;
-    downloadResume: string;
-    viewProjects: string;
+    logo?: string;
+    honors?: string;
 }
 
 export interface Hero {
+    greeting: Poly<string>;
+    title: Poly<string[]>;
+    description: Poly<string>;
+    location: Poly<string>;
+    downloadResume: Poly<string>;
+    viewProjects: Poly<string>;
     links: {
         github: string;
         linkedin: string;
         resume: string;
         email: string;
     };
-    translations: Record<Language, HeroTranslations>;
 }
 
-export type Language = "en" | "tr";
+export interface ResolvedHero {
+    greeting: string;
+    title: string[];
+    description: string;
+    location: string;
+    downloadResume: string;
+    viewProjects: string;
+    links: {
+        github: string;
+        linkedin: string;
+        resume: string;
+        email: string;
+    };
+}
