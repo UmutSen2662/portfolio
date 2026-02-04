@@ -27,12 +27,15 @@ export function CanvasProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     return (
-        <CanvasContext.Provider value={{ registerAttractor, unregisterAttractor, attractorsRef, isHovering, setIsHovering }}>
+        <CanvasContext.Provider
+            value={{ registerAttractor, unregisterAttractor, attractorsRef, isHovering, setIsHovering }}
+        >
             {children}
         </CanvasContext.Provider>
     );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useCanvas() {
     const context = useContext(CanvasContext);
     if (!context) {

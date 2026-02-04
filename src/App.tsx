@@ -5,7 +5,7 @@ import { InteractiveBackground } from "@/components/layout/InteractiveBackground
 import { Education } from "@/components/sections/Education";
 import { Experience } from "@/components/sections/Experience";
 import { Projects } from "@/components/sections/Projects";
-import { BackToTop } from "@/components/ui/BackToTop";
+import { BackToTop } from "@/components/layout/BackToTop";
 
 function App() {
     // const { t } = useLanguage(); // Removed unused t

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa6";
-import { Button } from "./Button";
+import { Button } from "../ui/Button";
 import { cn } from "@/lib/utils";
 
 export const BackToTop = () => {
