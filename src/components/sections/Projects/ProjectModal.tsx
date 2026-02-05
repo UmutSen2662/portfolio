@@ -71,12 +71,7 @@ export function ProjectModal({ project, onClose, initialImageIndex, onIndexChang
                 style={{ viewTransitionName: `project-${project.id}` } as React.CSSProperties}
             >
                 <div className="absolute top-4 right-4 z-50">
-                    <Button
-                        onClick={onClose}
-                        variant="ghost"
-                        size="icon"
-                        className="rounded-full bg-black/40 text-white hover:bg-black/60 hover:text-white backdrop-blur-md"
-                    >
+                    <Button onClick={onClose} variant="ghost" size="icon">
                         <FaTimes size={20} />
                     </Button>
                 </div>
@@ -112,28 +107,32 @@ export function ProjectModal({ project, onClose, initialImageIndex, onIndexChang
                     {/* Navigation Buttons */}
                     {carouselImages.length > 1 && (
                         <>
-                            <button
+                            <Button
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     scrollPrev();
                                 }}
                                 disabled={initialImageIndex === 0}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/30 text-white/70 hover:bg-black/50 hover:text-white backdrop-blur-sm transition-all opacity-0 group-hover/carousel:opacity-100 disabled:opacity-0 disabled:cursor-not-allowed"
+                                variant="ghost"
+                                size="icon"
+                                className="absolute left-4 top-1/2 -translate-y-1/2 opacity-0 group-hover/carousel:opacity-100 disabled:opacity-0"
                                 aria-label="Previous image"
                             >
                                 <FaChevronLeft size={20} />
-                            </button>
-                            <button
+                            </Button>
+                            <Button
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     scrollNext();
                                 }}
                                 disabled={initialImageIndex === carouselImages.length - 1}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/30 text-white/70 hover:bg-black/50 hover:text-white backdrop-blur-sm transition-all opacity-0 group-hover/carousel:opacity-100 disabled:opacity-0 disabled:cursor-not-allowed"
+                                variant="ghost"
+                                size="icon"
+                                className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover/carousel:opacity-100 disabled:opacity-0"
                                 aria-label="Next image"
                             >
                                 <FaChevronRight size={20} />
-                            </button>
+                            </Button>
 
                             {/* Dots Indicator */}
                             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 p-2 rounded-full bg-black/20 backdrop-blur-sm z-10">

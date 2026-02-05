@@ -7,22 +7,12 @@ export function LanguageSwitcher() {
     return (
         <div className="flex items-center gap-2">
             {language === "tr" && (
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setLanguage("en")}
-                    className="bg-ndark-800/75 text-nlight-100 hover:bg-ndark-700/75 ring-1 ring-ndark-700"
-                >
+                <Button variant="ghost" size="sm" onClick={() => setLanguage("en")}>
                     English
                 </Button>
             )}
             {language === "en" && (
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setLanguage("tr")}
-                    className="bg-ndark-800/75 text-nlight-100 hover:bg-ndark-700/75 ring-1 ring-ndark-700"
-                >
+                <Button variant="ghost" size="sm" onClick={() => setLanguage("tr")}>
                     Türkçe
                 </Button>
             )}
