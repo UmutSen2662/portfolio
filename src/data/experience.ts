@@ -19,8 +19,8 @@ export const EXPERIENCE: Experience[] = [
         startDate: { en: "Jun 2024", tr: "Haz 2024" },
         endDate: { en: "Aug 2024", tr: "Ağu 2024" },
         description: {
-            en: "Developed custom Framer and Webflow Plugins to enable no-code embedding of 3D models. Integrated Supabase for data caching to reduce main server load and implemented fuzzy search logic for real-time model retrieval.",
-            tr: "3D modellerin kodsuz entegrasyonunu sağlamak için özel Framer ve Webflow eklentileri geliştirdim. Ana sunucu yükünü azaltmak amacıyla veri önbellekleme için Supabase entegrasyonu yaptım ve gerçek zamanlı model alımı için fuzzy arama mantığı uyguladım.",
+            en: "Developed custom Framer and Webflow Plugins to enable no-code embedding of 3D models. Integrated Supabase for edge caching to significantly improve query latency and reduce main server load, and implemented client-side fuzzy search logic for real-time model retrieval.",
+            tr: "3D modellerin kodsuz entegrasyonunu sağlamak için özel Framer ve Webflow eklentileri geliştirdim. Sorgu gecikmesini önemli ölçüde iyileştirmek ve ana sunucu yükünü azaltmak için Supabase edge caching entegrasyonu yaptım. Ayrıca, gerçek zamanlı model erişimini hızlandırmak amacıyla istemci tarafında çalışan bir fuzzy arama mantığı kurguladım.",
         },
         company: "3D ProBox",
         technologies: ["React", "Svelte", "Supabase", "Framer API", "Webflow API"],
