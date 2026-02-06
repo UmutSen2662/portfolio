@@ -9,6 +9,7 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
         "projects.showLess": "Show Less",
         "projects.sourceCode": "Source Code",
         "projects.viewLive": "View Live",
+        "hero.resume": "Resume",
     },
     tr: {
         "nav.projects": "Projeler",
@@ -18,5 +19,6 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
         "projects.showLess": "Daha Az Göster",
         "projects.sourceCode": "Kaynak Kodu",
         "projects.viewLive": "Canlı Site",
+        "hero.resume": "CV",
     },
 };

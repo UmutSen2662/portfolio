@@ -2,10 +2,13 @@ import { useEffect, useRef } from "react";
 import { FaGithub, FaLinkedin, FaFileAlt, FaEnvelope, FaCode } from "react-icons/fa";
 import { useCanvas } from "@/context/CanvasContext";
 import { useData } from "@/hooks/useData";
+import { useLanguage } from "@/context/LanguageContext";
 import { Button } from "@/components/ui/Button";
+import { Tooltip } from "@/components/ui/Tooltip";
 
 export function Hero() {
     const { hero } = useData();
+    const { t } = useLanguage();
     const { setIsHovering, registerAttractor, unregisterAttractor } = useCanvas();
     const titleRef = useRef<HTMLDivElement>(null);
 
@@ -51,7 +54,7 @@ export function Hero() {
             <p className="text-base text-nlight-400 opacity-80 mt-2">{hero.location}</p>
 
             {/* CTAs */}
-            <div className="flex flex-col md:flex-row items-center gap-6 mt-8">
+            <div className="flex flex-col md:flex-row items-center gap-4 mt-8">
                 {/* Primary CTA - View Projects (Hover Strategy) */}
                 <Button
                     onClick={() => {
@@ -67,50 +70,58 @@ export function Hero() {
                 </Button>
 
                 {/* Secondary Social Links */}
-                <div className="flex gap-6 text-2xl text-nlight-300">
-                    <a
-                        href={hero.links.resume}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-white transition-colors hover:scale-110 transform duration-200"
-                        aria-label="Resume"
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                        download={hero.resumeDownloadName}
-                    >
-                        <FaFileAlt />
-                    </a>
-                    <a
-                        href={hero.links.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-white transition-colors hover:scale-110 transform duration-200"
-                        aria-label="GitHub"
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                    >
-                        <FaGithub />
-                    </a>
-                    <a
-                        href={hero.links.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-white transition-colors hover:scale-110 transform duration-200"
-                        aria-label="LinkedIn"
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                    >
-                        <FaLinkedin />
-                    </a>
-                    <a
-                        href={hero.links.email}
-                        className="hover:text-white transition-colors hover:scale-110 transform duration-200"
-                        aria-label="Email"
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                    >
-                        <FaEnvelope />
-                    </a>
+                <div className="flex gap-2 text-2xl text-nlight-300">
+                    <Tooltip text={t("hero.resume")}>
+                        <a
+                            href={hero.links.resume}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 hover:text-white transition-colors hover:scale-110 transform duration-200 block"
+                            aria-label="Resume"
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                            download={hero.resumeDownloadName}
+                        >
+                            <FaFileAlt />
+                        </a>
+                    </Tooltip>
+                    <Tooltip text="GitHub">
+                        <a
+                            href={hero.links.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 hover:text-white transition-colors hover:scale-110 transform duration-200 block"
+                            aria-label="GitHub"
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <FaGithub />
+                        </a>
+                    </Tooltip>
+                    <Tooltip text="LinkedIn">
+                        <a
+                            href={hero.links.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 hover:text-white transition-colors hover:scale-110 transform duration-200 block"
+                            aria-label="LinkedIn"
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <FaLinkedin />
+                        </a>
+                    </Tooltip>
+                    <Tooltip text="Email">
+                        <a
+                            href={hero.links.email}
+                            className="p-2 hover:text-white transition-colors hover:scale-110 transform duration-200 block"
+                            aria-label="Email"
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <FaEnvelope />
+                        </a>
+                    </Tooltip>
                 </div>
             </div>
         </section>
