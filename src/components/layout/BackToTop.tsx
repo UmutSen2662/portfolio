@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaArrowUp } from "react-icons/fa6";
+import { FaArrowUp } from "react-icons/fa";
 import { Button } from "../ui/Button";
 import { cn } from "@/lib/utils";
 
@@ -30,14 +30,14 @@ export const BackToTop = () => {
     return (
         <Button
             onClick={scrollToTop}
-            variant="default"
-            size="lg"
+            variant="ghost"
+            size="icon"
             className={cn(
-                "fixed bottom-8 right-8 z-40 text-2xl p-0 w-12 ease-in-out xl:right-auto xl:left-1/2 xl:ml-[26rem]",
+                "fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full ease-in-out xl:right-auto xl:left-1/2 xl:ml-[26rem]",
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none",
             )}
         >
-            <FaArrowUp />
+            <FaArrowUp size={32} />
         </Button>
     );
 };

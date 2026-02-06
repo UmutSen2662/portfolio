@@ -13,7 +13,7 @@ export function Navbar() {
     return (
         <nav className="w-full relative z-50">
             {/* Main Navbar Content */}
-            <div className="flex justify-between items-center px-2 pt-4 pb-4">
+            <div className="flex justify-between items-center p-4">
                 <p className="text-2xl font-bold text-nlight-100 tracking-wide">Umut Şen</p>
 
                 <div className="flex items-center gap-8">

@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
+import { Footer } from "@/components/layout/Footer";
 import { CanvasProvider } from "@/context/CanvasContext";
 import { InteractiveBackground } from "@/components/layout/InteractiveBackground";
 import { Education } from "@/components/sections/Education";
@@ -13,7 +14,7 @@ function App() {
     return (
         <CanvasProvider>
             <InteractiveBackground />
-            <div className="max-w-3xl mx-auto transition-all duration-200 mb-24 sm:mb-12">
+            <div className="max-w-3xl mx-auto transition-all duration-200">
                 <Navbar />
 
                 <main className="flex flex-col mx-4 pb-20">
@@ -25,6 +26,7 @@ function App() {
 
                     <Projects />
                 </main>
+                <Footer />
             </div>
             <BackToTop />
         </CanvasProvider>

@@ -10,6 +10,9 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
         "projects.sourceCode": "Source Code",
         "projects.viewLive": "View Live",
         "hero.resume": "Resume",
+        "footer.openToWork": "Open to Work",
+        "footer.connect": "Connect with me",
+        "footer.builtWith": "Built with",
     },
     tr: {
         "nav.projects": "Projeler",
@@ -20,5 +23,8 @@ export const UI_LABELS: Record<Language, Record<string, string>> = {
         "projects.sourceCode": "Kaynak Kodu",
         "projects.viewLive": "Canlı Site",
         "hero.resume": "CV",
+        "footer.openToWork": "Çalışmaya Açığım",
+        "footer.connect": "İletişime Geçin",
+        "footer.builtWith": "Teknolojiler:",
     },
 };
