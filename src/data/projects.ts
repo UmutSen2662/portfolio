@@ -33,7 +33,7 @@ export const PROJECTS: Project[] = [
             en: "This app leverages WebRTC with asynchronous candidate queueing to resolve connection race conditions, ensuring stable peer-to-peer audio streaming. It uses Supabase Realtime for signaling, while a custom real-time synchronization engine built on PostgreSQL Change Data Capture (CDC) ensures robust room state consistency. Developed as a PWA, it also optimizes performance by compressing images (Canvas to WebP) in-browser, providing a responsive, app-like experience.",
             tr: "Bu uygulama, güvenli eşler arası ses akışı için asenkron candidate queueing ile güçlendirilmiş WebRTC altyapısını kullanır ve bağlantı yarış koşullarını (race conditions) ortadan kaldırır. Sinyalizasyon için Supabase Realtime kullanılırken, PostgreSQL Change Data Capture (CDC) üzerine inşa edilen özel bir gerçek zamanlı senkronizasyon motoru, oda durumunun tutarlılığını garanti eder. PWA olarak geliştirilen proje, görselleri tarayıcıda sıkıştırarak (Canvas → WebP) performansı optimize eder ve uygulama benzeri akıcı bir deneyim sunar.",
         },
-        technologies: ["React", "TypeScript", "WebRTC", "Supabase", "Tailwind", "PWA", "PostgreSQL"],
+        technologies: ["React", "Supabase", "Tailwind", "WebRTC", "TypeScript", "PWA", "PostgreSQL"],
         images: ["/images/chat-app-1.webp", "/images/chat-app-2.webp"],
         links: [
             {
@@ -59,7 +59,7 @@ export const PROJECTS: Project[] = [
             en: "Engineered with Next.js 15 App Router to deliver optimized server-side rendering. Utilizes React 19 Server Components for seamless data orchestration and Next.js Incremental Static Regeneration (ISR) to reduce API load. It manages client-side state for a watchlist, and implements secure cross-origin communication using the HTML5 postMessage API to synchronize state with external video player iframes. The UI is built with Tailwind CSS 4, ensuring a responsive and modern viewing experience across devices.",
             tr: "TMDB API'sinden verimli veri çekimi için Next.js 15 App Router mimarisi ile geliştirildi. Veri orkestrasyonu için React 19 Sunucu Bileşenlerini kullanırken, API yükünü hafifletmek amacıyla Next.js Incremental Static Regeneration (ISR) teknolojisinden yararlanır. Ayrıca, harici video oynatıcı iframe'leri ile durum senkronizasyonunu sağlamak için HTML5 postMessage API kullanarak güvenli bir çapraz kökenli (cross-origin) iletişim mekanizması uygular. Arayüz, cihazlar arası duyarlı ve modern bir izleme deneyimi sunmak için Tailwind CSS 4 ile oluşturulmuştur.",
         },
-        technologies: ["Next.js", "TypeScript", "React", "Tailwind", "TMDB API"],
+        technologies: ["Next.js", "Tailwind", "React", "TypeScript", "TMDB API"],
         images: ["/images/usrc-1.webp", "/images/usrc-2.webp", "/images/usrc-3.webp"],
         links: [
             {
@@ -80,7 +80,7 @@ export const PROJECTS: Project[] = [
             en: "Engineered a real-time, event-driven game server using Node.js and Socket.io to synchronize state across clients with low latency. Implemented a deterministic state machine to enforce complex rule sets—such as penalty stacking and turn reversals—and integrated heuristic-based AI agents for adaptive single-player and mixed-mode gameplay.",
             tr: "Node.js ve Socket.io kullanarak, istemciler arasında düşük gecikmeyle durum senkronizasyonu sağlayan gerçek zamanlı ve olay güdümlü (event-driven) bir oyun sunucusu geliştirdim. Ceza katlama ve sıra tersine çevirme gibi karmaşık kural setlerini dayatmak için deterministik bir durum makinesi (state machine) uyguladım ve adaptif tek/karma oyun modları için sezgisel tabanlı yapay zeka ajanlarını entegre ettim.",
         },
-        technologies: ["Node.js", "Socket.io", "Express.js", "EJS", "CSS3"],
+        technologies: ["Node.js", "Socket.io", "Express.js", "EJS", "CSS", "JavaScript"],
         images: ["/images/mono-1.webp", "/images/mono-2.webp", "/images/mono-3.webp", "/images/mono-4.webp"],
         links: [
             {
