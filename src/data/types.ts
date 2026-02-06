@@ -89,9 +89,10 @@ export interface Hero {
     links: {
         github: string;
         linkedin: string;
-        resume: string;
+        resume: Poly<string>;
         email: string;
     };
+    resumeDownloadName: Poly<string>;
 }
 
 export interface ResolvedHero {
@@ -107,4 +108,5 @@ export interface ResolvedHero {
         resume: string;
         email: string;
     };
+    resumeDownloadName: string;
 }

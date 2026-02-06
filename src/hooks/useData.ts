@@ -65,6 +65,11 @@ export function useData() {
             location: resolvePoly(HERO.location, language),
             downloadResume: resolvePoly(HERO.downloadResume, language),
             viewProjects: resolvePoly(HERO.viewProjects, language),
+            links: {
+                ...HERO.links,
+                resume: resolvePoly(HERO.links.resume, language),
+            },
+            resumeDownloadName: resolvePoly(HERO.resumeDownloadName, language),
         };
 
         return { projects, experience, education, hero };

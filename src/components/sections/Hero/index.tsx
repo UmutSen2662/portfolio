@@ -76,6 +76,7 @@ export function Hero() {
                         aria-label="Resume"
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
+                        download={hero.resumeDownloadName}
                     >
                         <FaFileAlt />
                     </a>
