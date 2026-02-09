@@ -9,7 +9,7 @@ export function ExperienceItem({ experience }: ExperienceItemProps) {
         <div className="relative pl-10 sm:pl-16 group">
             {/* Timeline Node */}
             <div className="absolute left-[3.5px] sm:left-[16.5px] top-2 z-10">
-                <div className="w-3 h-3 rounded-full bg-ndark-900 border-3 border-ndark-600 transition-colors duration-300 group-hover:border-primary-400 group-hover:bg-primary-900/50" />
+                <div className="w-3 h-3 rounded-full bg-ndark-900 border-3 border-ndark-600 transition-colors duration-200 group-hover:border-primary-400 group-hover:bg-primary-900/50" />
             </div>
 
             <div className="flex flex-col gap-2">

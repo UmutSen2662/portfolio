@@ -21,21 +21,21 @@
 }
 
 :root {
-    --color-ndark-900: oklab(0.15 0.001 0.003);
-    --color-ndark-800: oklab(0.2 0.001 0.003);
-    --color-ndark-700: oklab(0.25 0.001 0.003);
-    --color-ndark-600: oklab(0.3 0.001 0.003);
+    --color-ndark-900: oklab(12% -0.002 -0.004);
+    --color-ndark-800: oklab(18% -0.002 -0.004);
+    --color-ndark-700: oklab(25% -0.002 -0.004);
+    --color-ndark-600: oklab(30% -0.002 -0.004);
 
-    --color-nlight-100: oklab(0.95 0 0);
-    --color-nlight-200: oklab(0.85 0 0);
-    --color-nlight-300: oklab(0.75 0 0);
-    --color-nlight-400: oklab(0.65 0 0);
+    --color-nlight-100: oklab(95% 0 0);
+    --color-nlight-200: oklab(85% 0 0);
+    --color-nlight-300: oklab(75% 0 0);
+    --color-nlight-400: oklab(65% 0 0);
 
-    --color-primary-400: oklab(0.75 0.01 0.15);
-    --color-primary-500: oklab(0.7 0.01 0.15);
-    --color-primary-600: oklab(0.65 0.01 0.15);
-    --color-primary-700: oklab(0.6 0.01 0.15);
-    --color-primary-800: oklab(0.55 0.01 0.15);
+    --color-primary-400: oklab(70% 0.01 0.15);
+    --color-primary-500: oklab(65% 0.01 0.15);
+    --color-primary-600: oklab(60% 0.01 0.15);
+    --color-primary-700: oklab(55% 0.01 0.15);
+    --color-primary-800: oklab(50% 0.01 0.15);
 
     font-size: 18px;
     font-family: "Roboto", sans-serif;

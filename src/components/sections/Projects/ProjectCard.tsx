@@ -16,7 +16,7 @@ export function ProjectCard({ project, onClick, isSelected, viewTransitionName, 
 
     return (
         <Card
-            className="group cursor-pointer hover:border-primary-500/30 active:scale-[0.98] h-full flex flex-col justify-between p-4 relative hover:z-30 transition-all duration-300"
+            className="group cursor-pointer hover:border-primary-500/30 active:scale-[0.98] h-full flex flex-col justify-between p-4 relative hover:z-30 transition-all duration-200"
             onClick={onClick}
             style={viewTransitionName ? ({ viewTransitionName } as React.CSSProperties) : undefined}
         >

@@ -26,7 +26,7 @@ export function Navbar() {
                                     }}
                                     className="group flex items-center h-full text-nlight-300 hover:text-nlight-100 transition-colors cursor-pointer relative"
                                 >
-                                    <span className="text-primary-400 font-bold absolute top-1/2 -translate-y-1/2 -left-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                                    <span className="text-primary-400 font-bold absolute top-1/2 -translate-y-1/2 -left-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200">
                                         /
                                     </span>
                                     {t(item.label)}

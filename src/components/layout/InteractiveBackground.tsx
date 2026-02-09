@@ -34,17 +34,16 @@ export function InteractiveBackground() {
         // Configuration
         const DOT_SPACING = 48;
         const DOT_BASE_RADIUS = 4;
-        const BASE_MAX_RADIUS = 6;
+        const BASE_MAX_RADIUS = 12;
 
-        const MOUSE_INFLUENCE_RADIUS = 90;
-        const MOUSE_CORE_RADIUS = 20;
-        const PARALLAX_OFFSET = 32;
+        const MOUSE_INFLUENCE_RADIUS = 96;
+        const MOUSE_CORE_RADIUS = 24;
+        const PARALLAX_OFFSET = 48;
         const SCROLL_SPEED = 0.05;
         const SCROLL_WRAP = DOT_SPACING * 2;
         const ATTRACTOR_INFLUENCE_RADIUS = 48;
 
-        const DOT_COLOR = "rgba(183, 134, 0, 0.25)";
-        const HOVER_DOT_COLOR = "rgba(183, 134, 0, 0.25)";
+        const DOT_COLOR = "rgba(183, 134, 0, 0.45)";
 
         const handleResize = () => {
             canvas.width = window.innerWidth;
@@ -114,7 +113,6 @@ export function InteractiveBackground() {
 
             // Reusable loop variables
             let r,
-                maxGrowth,
                 screenX,
                 screenY,
                 dx,
@@ -134,79 +132,6 @@ export function InteractiveBackground() {
             const endX = canvas.width + EXTRA_MARGIN;
             const startY = -EXTRA_MARGIN;
             const endY = canvas.height + EXTRA_MARGIN;
-
-            // BATCH 1: GLOW
-            ctx.fillStyle = HOVER_DOT_COLOR;
-            ctx.beginPath();
-
-            for (let x = startX; x < endX; x += DOT_SPACING) {
-                for (let y = startY; y < endY; y += DOT_SPACING) {
-                    screenX = x + activeOffsetX;
-                    screenY = y + activeOffsetY;
-
-                    dx = screenX - mouseX;
-                    dy = screenY - mouseY;
-                    distMouseSq = dx * dx + dy * dy;
-
-                    r = DOT_BASE_RADIUS;
-                    maxGrowth = 0;
-
-                    if (distMouseSq < currentMouseRadiusSq) {
-                        distMouse = Math.sqrt(distMouseSq);
-
-                        if (distMouse < MOUSE_CORE_RADIUS) {
-                            growth = 1.0;
-                            r += (BASE_MAX_RADIUS - DOT_BASE_RADIUS) * growth;
-                            maxGrowth = Math.max(maxGrowth, growth);
-                        } else {
-                            effectiveDist = distMouse - MOUSE_CORE_RADIUS;
-                            effectiveMaxRadius = MOUSE_INFLUENCE_RADIUS - MOUSE_CORE_RADIUS;
-
-                            if (effectiveMaxRadius > 0) {
-                                linearGrowth = 1 - Math.min(effectiveDist / effectiveMaxRadius, 1);
-                                growth = linearGrowth * linearGrowth;
-                                r += (BASE_MAX_RADIUS - DOT_BASE_RADIUS) * growth;
-                                maxGrowth = Math.max(maxGrowth, growth);
-                            }
-                        }
-                    }
-
-                    for (const rect of activeAttractors) {
-                        if (
-                            screenX < rect.left - ATTRACTOR_INFLUENCE_RADIUS ||
-                            screenX > rect.right + ATTRACTOR_INFLUENCE_RADIUS ||
-                            screenY < rect.top - ATTRACTOR_INFLUENCE_RADIUS ||
-                            screenY > rect.bottom + ATTRACTOR_INFLUENCE_RADIUS
-                        ) {
-                            continue;
-                        }
-
-                        const clampedX = Math.max(rect.left, Math.min(screenX, rect.right));
-                        const clampedY = Math.max(rect.top, Math.min(screenY, rect.bottom));
-                        const distAttractorSq = (screenX - clampedX) ** 2 + (screenY - clampedY) ** 2;
-
-                        if (distAttractorSq < attractorRadiusSq) {
-                            const distAttractor = Math.sqrt(distAttractorSq);
-                            const linearGrowth = 1 - distAttractor / ATTRACTOR_INFLUENCE_RADIUS;
-                            const growth = linearGrowth * linearGrowth;
-                            const attractorSize = DOT_BASE_RADIUS + (BASE_MAX_RADIUS - DOT_BASE_RADIUS) * growth * 1.2;
-
-                            if (attractorSize > r) {
-                                r = attractorSize;
-                                maxGrowth = Math.max(maxGrowth, growth);
-                            }
-                        }
-                    }
-
-                    if (maxGrowth > 0.01) {
-                        const glowMultiplier = 1.0 + maxGrowth * 1.5;
-                        const glowR = r * glowMultiplier;
-                        ctx.moveTo(x + glowR, y);
-                        ctx.arc(x, y, glowR, 0, PI2);
-                    }
-                }
-            }
-            ctx.fill();
 
             // BATCH 2: CORE
             ctx.fillStyle = DOT_COLOR;
@@ -287,7 +212,7 @@ export function InteractiveBackground() {
         <canvas
             ref={canvasRef}
             className="fixed inset-0 -z-10 pointer-events-none"
-            style={{ background: "var(--color-ndark-900)", filter: "blur(4px)" }}
+            style={{ background: "var(--color-ndark-900)", filter: "blur(6px)" }}
         />
     );
 }
