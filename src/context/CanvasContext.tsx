@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef, useCallback, useState } from "react";
+import { createContext, useContext, useRef, useCallback } from "react";
 import type { RefObject } from "react";
 
 interface CanvasContextType {
@@ -6,15 +6,12 @@ interface CanvasContextType {
     unregisterAttractor: (ref: RefObject<HTMLElement | null>) => void;
     // We expose the ref directly so the animation loop can read it without triggering re-renders
     attractorsRef: React.RefObject<RefObject<HTMLElement | null>[]>;
-    isHovering: boolean;
-    setIsHovering: (hovering: boolean) => void;
 }
 
 const CanvasContext = createContext<CanvasContextType | undefined>(undefined);
 
 export function CanvasProvider({ children }: { children: React.ReactNode }) {
     const attractorsRef = useRef<RefObject<HTMLElement | null>[]>([]);
-    const [isHovering, setIsHovering] = useState(false);
 
     const registerAttractor = useCallback((ref: RefObject<HTMLElement | null>) => {
         if (!attractorsRef.current.includes(ref)) {
@@ -27,9 +24,7 @@ export function CanvasProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     return (
-        <CanvasContext.Provider
-            value={{ registerAttractor, unregisterAttractor, attractorsRef, isHovering, setIsHovering }}
-        >
+        <CanvasContext.Provider value={{ registerAttractor, unregisterAttractor, attractorsRef }}>
             {children}
         </CanvasContext.Provider>
     );

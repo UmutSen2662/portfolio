@@ -9,7 +9,7 @@ import { Tooltip } from "@/components/ui/Tooltip";
 export function Hero() {
     const { hero } = useData();
     const { t } = useLanguage();
-    const { setIsHovering, registerAttractor, unregisterAttractor } = useCanvas();
+    const { registerAttractor, unregisterAttractor } = useCanvas();
     const titleRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -20,9 +20,6 @@ export function Hero() {
             unregisterAttractor(titleRef);
         };
     }, [registerAttractor, unregisterAttractor]);
-
-    const handleMouseEnter = () => setIsHovering(true);
-    const handleMouseLeave = () => setIsHovering(false);
 
     return (
         <section
@@ -63,8 +60,6 @@ export function Hero() {
                     variant="default"
                     size="lg"
                     className="gap-2 active:scale-95"
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
                 >
                     <FaCode /> {hero.viewProjects}
                 </Button>
@@ -78,8 +73,6 @@ export function Hero() {
                             rel="noopener noreferrer"
                             className="p-2 hover:text-white transition-colors hover:scale-110 transform duration-200 block"
                             aria-label="Resume"
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
                             download={hero.resumeDownloadName}
                         >
                             <FaFileAlt />
@@ -92,8 +85,6 @@ export function Hero() {
                             rel="noopener noreferrer"
                             className="p-2 hover:text-white transition-colors hover:scale-110 transform duration-200 block"
                             aria-label="GitHub"
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
                         >
                             <FaGithub />
                         </a>
@@ -105,8 +96,6 @@ export function Hero() {
                             rel="noopener noreferrer"
                             className="p-2 hover:text-white transition-colors hover:scale-110 transform duration-200 block"
                             aria-label="LinkedIn"
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
                         >
                             <FaLinkedin />
                         </a>
@@ -116,8 +105,6 @@ export function Hero() {
                             href={hero.links.email}
                             className="p-2 hover:text-white transition-colors hover:scale-110 transform duration-200 block"
                             aria-label="Email"
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
                         >
                             <FaEnvelope />
                         </a>

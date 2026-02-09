@@ -32,6 +32,7 @@ export const BackToTop = () => {
             onClick={scrollToTop}
             variant="ghost"
             size="icon"
+            aria-label="Back to top"
             className={cn(
                 "fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full ease-in-out xl:right-auto xl:left-1/2 xl:ml-[26rem]",
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none",

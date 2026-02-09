@@ -3,14 +3,22 @@ import { useCanvas } from "@/context/CanvasContext";
 
 export function InteractiveBackground() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const { attractorsRef, isHovering } = useCanvas();
-
-    // Use a ref to track hover state so we don't restart the animation loop
-    const isHoveringRef = useRef(isHovering);
+    const { attractorsRef } = useCanvas();
+    const rectsRef = useRef<DOMRect[]>([]);
 
     useEffect(() => {
-        isHoveringRef.current = isHovering;
-    }, [isHovering]);
+        const timer = setTimeout(() => {
+            // Initial rect calculation after mount/layout
+            updateRects();
+        }, 100);
+        return () => clearTimeout(timer);
+    }, [attractorsRef]);
+
+    const updateRects = () => {
+        rectsRef.current = attractorsRef.current
+            .map((ref) => (ref.current ? ref.current.getBoundingClientRect() : null))
+            .filter((rect): rect is DOMRect => rect !== null);
+    };
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -24,26 +32,28 @@ export function InteractiveBackground() {
         let mouseY = -1000;
 
         // Configuration
-        const DOT_SPACING = 36;
+        const DOT_SPACING = 48;
         const DOT_BASE_RADIUS = 4;
         const BASE_MAX_RADIUS = 6;
-        const HOVER_MAX_RADIUS = 10;
 
-        const MOUSE_INFLUENCE_RADIUS = 80;
-        const HOVER_MOUSE_INFLUENCE_RADIUS = 120;
-        const MOUSE_CORE_RADIUS = 16;
-        const PARALLAX_OFFSET = 24;
+        const MOUSE_INFLUENCE_RADIUS = 90;
+        const MOUSE_CORE_RADIUS = 20;
+        const PARALLAX_OFFSET = 32;
         const SCROLL_SPEED = 0.05;
         const SCROLL_WRAP = DOT_SPACING * 2;
-        const ATTRACTOR_INFLUENCE_RADIUS = 40;
+        const ATTRACTOR_INFLUENCE_RADIUS = 48;
 
         const DOT_COLOR = "rgba(183, 134, 0, 0.25)";
-        const HOVER_DOT_COLOR = "rgba(183, 134, 0, 0.2)";
-        const TRANSITION_DURATION = 0.2;
+        const HOVER_DOT_COLOR = "rgba(183, 134, 0, 0.25)";
 
         const handleResize = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            updateRects();
+        };
+
+        const handleScroll = () => {
+            updateRects();
         };
 
         const handleMouseMove = (e: MouseEvent) => {
@@ -53,14 +63,11 @@ export function InteractiveBackground() {
 
         window.addEventListener("resize", handleResize);
         window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("scroll", handleScroll, { passive: true });
 
         // Initial Size
         handleResize();
         const PI2 = Math.PI * 2;
-
-        let lastTime = performance.now();
-        let interpolatedMaxRadius = BASE_MAX_RADIUS;
-        let interpolatedMouseRadius = MOUSE_INFLUENCE_RADIUS;
 
         // FPS Limit Config
         const TARGET_FPS = 24;
@@ -69,6 +76,8 @@ export function InteractiveBackground() {
 
         const render = (time: number) => {
             if (!canvas || !ctx) return;
+
+            const activeAttractors = rectsRef.current;
 
             const elapsed = time - lastDrawTime;
 
@@ -80,52 +89,12 @@ export function InteractiveBackground() {
             // Adjust for drift
             lastDrawTime = time - (elapsed % FRAME_INTERVAL);
 
-            const now = time;
-            // Use actual dt for smooth interpolation even with dropped frames, but cap it to avoid huge jumps
-            const dt = Math.min((now - lastTime) / 1000, 0.1);
-            lastTime = now;
-
-            // ANIMATION LOGIC: Max Radius Interpolation
-            const targetMaxRadius = isHoveringRef.current ? HOVER_MAX_RADIUS : BASE_MAX_RADIUS;
-            const speed = Math.abs(HOVER_MAX_RADIUS - BASE_MAX_RADIUS) / TRANSITION_DURATION;
-
-            if (interpolatedMaxRadius < targetMaxRadius) {
-                interpolatedMaxRadius = Math.min(targetMaxRadius, interpolatedMaxRadius + speed * dt);
-            } else if (interpolatedMaxRadius > targetMaxRadius) {
-                interpolatedMaxRadius = Math.max(targetMaxRadius, interpolatedMaxRadius - speed * dt);
-            }
-
-            const currentMaxRadius = interpolatedMaxRadius;
-
-            const targetMouseRadius = isHoveringRef.current ? HOVER_MOUSE_INFLUENCE_RADIUS : MOUSE_INFLUENCE_RADIUS;
-            const mouseSpeed = Math.abs(HOVER_MOUSE_INFLUENCE_RADIUS - MOUSE_INFLUENCE_RADIUS) / TRANSITION_DURATION;
-
-            if (interpolatedMouseRadius < targetMouseRadius) {
-                interpolatedMouseRadius = Math.min(targetMouseRadius, interpolatedMouseRadius + mouseSpeed * dt);
-            } else if (interpolatedMouseRadius > targetMouseRadius) {
-                interpolatedMouseRadius = Math.max(targetMouseRadius, interpolatedMouseRadius - mouseSpeed * dt);
-            }
-
-            const currentMouseRadius = interpolatedMouseRadius;
-
             // Clear Background
-            // We can't use clearRect alone if we want the trail effect, but here we want crisp redraws
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            const activeAttractors = attractorsRef.current
-                .map((ref) => (ref.current ? ref.current.getBoundingClientRect() : null))
-                .filter((rect): rect is DOMRect => rect !== null);
-
-            // Re-usable Helper for Math
-            // We inline the logic inside the loops for V8 optimization (avoiding function call overhead in tight loops)
-            // But for readability here we'll define the logic:
-
             // Optimization: Pre-calculate square radii needed
-            const currentMouseRadiusSq = currentMouseRadius * currentMouseRadius;
+            const currentMouseRadiusSq = MOUSE_INFLUENCE_RADIUS * MOUSE_INFLUENCE_RADIUS;
             const attractorRadiusSq = ATTRACTOR_INFLUENCE_RADIUS * ATTRACTOR_INFLUENCE_RADIUS;
-
-            // BATCH 1: GLOW (Simulated by larger, transparent circles)
-            // Only draw glow for dots that are significantly affected
 
             // PARALLAX CALCULATION
             const centerX = canvas.width / 2;
@@ -143,53 +112,66 @@ export function InteractiveBackground() {
             ctx.save();
             ctx.translate(activeOffsetX, activeOffsetY);
 
-            ctx.fillStyle = HOVER_DOT_COLOR;
-            ctx.beginPath();
+            // Reusable loop variables
+            let r,
+                maxGrowth,
+                screenX,
+                screenY,
+                dx,
+                dy,
+                distMouseSq,
+                distMouse,
+                effectiveDist,
+                effectiveMaxRadius,
+                growth,
+                linearGrowth;
 
             // Expand loop to cover boundaries
             const EXTRA_MARGIN = SCROLL_WRAP + DOT_SPACING;
 
-            for (let x = -EXTRA_MARGIN; x < canvas.width + EXTRA_MARGIN; x += DOT_SPACING) {
-                for (let y = -EXTRA_MARGIN; y < canvas.height + EXTRA_MARGIN; y += DOT_SPACING) {
-                    // --- Radius Calc Start ---
-                    const screenX = x + activeOffsetX;
-                    const screenY = y + activeOffsetY;
+            // Loop Bounds
+            const startX = -EXTRA_MARGIN;
+            const endX = canvas.width + EXTRA_MARGIN;
+            const startY = -EXTRA_MARGIN;
+            const endY = canvas.height + EXTRA_MARGIN;
 
-                    const dx = screenX - mouseX;
-                    const dy = screenY - mouseY;
-                    const distMouseSq = dx * dx + dy * dy;
+            // BATCH 1: GLOW
+            ctx.fillStyle = HOVER_DOT_COLOR;
+            ctx.beginPath();
 
-                    let r = DOT_BASE_RADIUS;
-                    let maxGrowth = 0;
+            for (let x = startX; x < endX; x += DOT_SPACING) {
+                for (let y = startY; y < endY; y += DOT_SPACING) {
+                    screenX = x + activeOffsetX;
+                    screenY = y + activeOffsetY;
+
+                    dx = screenX - mouseX;
+                    dy = screenY - mouseY;
+                    distMouseSq = dx * dx + dy * dy;
+
+                    r = DOT_BASE_RADIUS;
+                    maxGrowth = 0;
 
                     if (distMouseSq < currentMouseRadiusSq) {
-                        const distMouse = Math.sqrt(distMouseSq);
+                        distMouse = Math.sqrt(distMouseSq);
 
-                        // Core Radius Logic (Shelf)
                         if (distMouse < MOUSE_CORE_RADIUS) {
-                            // Inside core radius: 100% influence
-                            const growth = 1.0;
-                            r += (currentMaxRadius - DOT_BASE_RADIUS) * growth;
+                            growth = 1.0;
+                            r += (BASE_MAX_RADIUS - DOT_BASE_RADIUS) * growth;
                             maxGrowth = Math.max(maxGrowth, growth);
                         } else {
-                            // Outside core radius: Falloff over remaining distance
-                            // effectively mapping [core...max] to [1...0]
-                            const effectiveDist = distMouse - MOUSE_CORE_RADIUS;
-                            const effectiveMaxRadius = currentMouseRadius - MOUSE_CORE_RADIUS;
+                            effectiveDist = distMouse - MOUSE_CORE_RADIUS;
+                            effectiveMaxRadius = MOUSE_INFLUENCE_RADIUS - MOUSE_CORE_RADIUS;
 
-                            // Check to avoid division by zero or negative ranges if core > max (unlikely configuration)
                             if (effectiveMaxRadius > 0) {
-                                const linearGrowth = 1 - Math.min(effectiveDist / effectiveMaxRadius, 1);
-                                const growth = linearGrowth * linearGrowth; // Quadratic
-                                r += (currentMaxRadius - DOT_BASE_RADIUS) * growth;
+                                linearGrowth = 1 - Math.min(effectiveDist / effectiveMaxRadius, 1);
+                                growth = linearGrowth * linearGrowth;
+                                r += (BASE_MAX_RADIUS - DOT_BASE_RADIUS) * growth;
                                 maxGrowth = Math.max(maxGrowth, growth);
                             }
                         }
                     }
 
                     for (const rect of activeAttractors) {
-                        // Quick bounding box check before expensive distance
-                        // Use screen coordinates for checking against clientRects
                         if (
                             screenX < rect.left - ATTRACTOR_INFLUENCE_RADIUS ||
                             screenX > rect.right + ATTRACTOR_INFLUENCE_RADIUS ||
@@ -206,7 +188,7 @@ export function InteractiveBackground() {
                         if (distAttractorSq < attractorRadiusSq) {
                             const distAttractor = Math.sqrt(distAttractorSq);
                             const linearGrowth = 1 - distAttractor / ATTRACTOR_INFLUENCE_RADIUS;
-                            const growth = linearGrowth * linearGrowth; // Quadratic
+                            const growth = linearGrowth * linearGrowth;
                             const attractorSize = DOT_BASE_RADIUS + (BASE_MAX_RADIUS - DOT_BASE_RADIUS) * growth * 1.2;
 
                             if (attractorSize > r) {
@@ -215,11 +197,8 @@ export function InteractiveBackground() {
                             }
                         }
                     }
-                    // --- Radius Calc End ---
 
-                    // Only Add to Glow Path if there is some significant growth
                     if (maxGrowth > 0.01) {
-                        // Dynamic Glow Expansion
                         const glowMultiplier = 1.0 + maxGrowth * 1.5;
                         const glowR = r * glowMultiplier;
                         ctx.moveTo(x + glowR, y);
@@ -229,45 +208,40 @@ export function InteractiveBackground() {
             }
             ctx.fill();
 
-            // BATCH 2: CORE (Sharp dots)
+            // BATCH 2: CORE
             ctx.fillStyle = DOT_COLOR;
             ctx.beginPath();
 
-            // Repeat loop for core dots
-            // Reuse EXTRA_MARGIN from batch 1
-            for (let x = -EXTRA_MARGIN; x < canvas.width + EXTRA_MARGIN; x += DOT_SPACING) {
-                for (let y = -EXTRA_MARGIN; y < canvas.height + EXTRA_MARGIN; y += DOT_SPACING) {
-                    // --- Radius Calc Start (Repeat) ---
-                    const screenX = x + activeOffsetX;
-                    const screenY = y + activeOffsetY;
+            for (let x = startX; x < endX; x += DOT_SPACING) {
+                for (let y = startY; y < endY; y += DOT_SPACING) {
+                    screenX = x + activeOffsetX;
+                    screenY = y + activeOffsetY;
 
-                    const dx = screenX - mouseX;
-                    const dy = screenY - mouseY;
-                    const distMouseSq = dx * dx + dy * dy;
+                    dx = screenX - mouseX;
+                    dy = screenY - mouseY;
+                    distMouseSq = dx * dx + dy * dy;
 
-                    let r = DOT_BASE_RADIUS;
+                    r = DOT_BASE_RADIUS;
 
                     if (distMouseSq < currentMouseRadiusSq) {
-                        const distMouse = Math.sqrt(distMouseSq);
+                        distMouse = Math.sqrt(distMouseSq);
 
-                        // Core Radius Logic (Shelf) - Repeat for core pass
                         if (distMouse < MOUSE_CORE_RADIUS) {
-                            const growth = 1.0; // 100%
-                            r += (currentMaxRadius - DOT_BASE_RADIUS) * growth;
+                            const growth = 1.0;
+                            r += (BASE_MAX_RADIUS - DOT_BASE_RADIUS) * growth;
                         } else {
-                            const effectiveDist = distMouse - MOUSE_CORE_RADIUS;
-                            const effectiveMaxRadius = currentMouseRadius - MOUSE_CORE_RADIUS;
+                            effectiveDist = distMouse - MOUSE_CORE_RADIUS;
+                            effectiveMaxRadius = MOUSE_INFLUENCE_RADIUS - MOUSE_CORE_RADIUS;
 
                             if (effectiveMaxRadius > 0) {
-                                const linearGrowth = 1 - Math.min(effectiveDist / effectiveMaxRadius, 1);
-                                const growth = linearGrowth * linearGrowth; // Quadratic
-                                r += (currentMaxRadius - DOT_BASE_RADIUS) * growth;
+                                linearGrowth = 1 - Math.min(effectiveDist / effectiveMaxRadius, 1);
+                                growth = linearGrowth * linearGrowth;
+                                r += (BASE_MAX_RADIUS - DOT_BASE_RADIUS) * growth;
                             }
                         }
                     }
 
                     for (const rect of activeAttractors) {
-                        // Quick bounding box check
                         if (
                             screenX < rect.left - ATTRACTOR_INFLUENCE_RADIUS ||
                             screenX > rect.right + ATTRACTOR_INFLUENCE_RADIUS ||
@@ -283,12 +257,11 @@ export function InteractiveBackground() {
                         if (distAttractorSq < attractorRadiusSq) {
                             const distAttractor = Math.sqrt(distAttractorSq);
                             const linearGrowth = 1 - distAttractor / ATTRACTOR_INFLUENCE_RADIUS;
-                            const growth = linearGrowth * linearGrowth; // Quadratic
+                            const growth = linearGrowth * linearGrowth;
                             const attractorSize = DOT_BASE_RADIUS + (BASE_MAX_RADIUS - DOT_BASE_RADIUS) * growth * 1.2;
                             r = Math.max(r, attractorSize);
                         }
                     }
-                    // --- Radius Calc End ---
 
                     ctx.moveTo(x + r, y);
                     ctx.arc(x, y, r, 0, PI2);
@@ -305,6 +278,7 @@ export function InteractiveBackground() {
         return () => {
             window.removeEventListener("resize", handleResize);
             window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("scroll", handleScroll);
             cancelAnimationFrame(animationFrameId);
         };
     }, [attractorsRef]);
