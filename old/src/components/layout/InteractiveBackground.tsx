@@ -1,18 +1,18 @@
 import { useEffect, useRef } from "react";
+import { useCanvas } from "@/context/CanvasContext";
 
 export function InteractiveBackground() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const attractorsRef = useRef<{ current: HTMLElement | null }[]>([]);
+    const { attractorsRef } = useCanvas();
     const rectsRef = useRef<DOMRect[]>([]);
 
     useEffect(() => {
-        attractorsRef.current = Array.from(document.querySelectorAll<HTMLElement>('[data-attractor="true"]')).map(el => ({ current: el }));
         const timer = setTimeout(() => {
             // Initial rect calculation after mount/layout
             updateRects();
         }, 100);
         return () => clearTimeout(timer);
-    }, []);
+    }, [attractorsRef]);
 
     const updateRects = () => {
         rectsRef.current = attractorsRef.current
@@ -206,7 +206,7 @@ export function InteractiveBackground() {
             window.removeEventListener("scroll", handleScroll);
             cancelAnimationFrame(animationFrameId);
         };
-    }, []);
+    }, [attractorsRef]);
 
     return (
         <canvas

@@ -1,0 +1,31 @@
+---
+// src/components/PageContent.astro
+import Layout from '@/layouts/Layout.astro';
+import Navbar from '@/components/layout/Navbar.astro';
+import Hero from '@/components/sections/Hero.astro';
+import Education from '@/components/sections/Education/Education.astro';
+import Experience from '@/components/sections/Experience/Experience.astro';
+import { Projects } from '@/components/sections/Projects/Projects';
+import Footer from '@/components/layout/Footer.astro';
+import { InteractiveBackground } from '@/components/layout/InteractiveBackground';
+import { BackToTop } from '@/components/layout/BackToTop';
+
+interface Props {
+  lang: 'en' | 'tr';
+}
+const { lang } = Astro.props;
+---
+<Layout title="Umut Şen" description="Software developer portfolio" lang={lang}>
+  <InteractiveBackground client:only="react" />
+  <div class="max-w-3xl mx-auto transition-all duration-200">
+    <Navbar lang={lang} />
+    <main class="flex flex-col mx-4 pb-20">
+      <Hero lang={lang} />
+      <Education lang={lang} />
+      <Experience lang={lang} />
+      <Projects lang={lang} client:visible />
+    </main>
+    <Footer lang={lang} />
+  </div>
+  <BackToTop client:load />
+</Layout>

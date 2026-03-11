@@ -1,0 +1,39 @@
+---
+import { EXPERIENCE } from "@/data/experience";
+import { resolvePoly, t } from "@/lib/localization";
+import ExperienceItem from "./ExperienceItem.astro";
+
+interface Props {
+  lang: 'en' | 'tr';
+}
+const { lang } = Astro.props;
+
+const experience = EXPERIENCE.map(e => ({
+  id: e.id,
+  company: resolvePoly(e.company, lang),
+  role: resolvePoly(e.role, lang),
+  startDate: resolvePoly(e.startDate, lang),
+  endDate: resolvePoly(e.endDate, lang),
+  description: resolvePoly(e.description, lang),
+  technologies: e.technologies,
+}));
+---
+<section id="experience" class="flex flex-col pt-6 mt-18 gap-8">
+    <h2 class="text-2xl font-bold flex items-center gap-2">
+        <span class="text-primary-400">/</span> {t(lang, "nav.experience")}
+    </h2>
+
+    <div class="relative">
+        <!-- Vertical Line -->
+        <div
+            class="absolute left-2 sm:left-[22px] top-2 bottom-6 w-[3px] bg-gradient-to-b from-ndark-600 via-ndark-600 to-transparent"
+            aria-hidden="true"
+        ></div>
+
+        <div class="flex flex-col gap-12">
+            {experience.map((exp) => (
+                <ExperienceItem experience={exp} />
+            ))}
+        </div>
+    </div>
+</section

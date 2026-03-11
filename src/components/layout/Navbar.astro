@@ -1,0 +1,43 @@
+---
+import { t } from '@/lib/localization';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+interface Props {
+  lang: 'en' | 'tr';
+}
+
+const { lang } = Astro.props;
+
+const navItems = [
+    { id: "education", label: "nav.education" },
+    { id: "experience", label: "nav.experience" },
+    { id: "projects", label: "nav.projects" },
+] as const;
+---
+
+<nav class="w-full relative z-50">
+  <div class="flex justify-between items-center p-4">
+    <p class="text-2xl font-bold text-nlight-100 tracking-wide">Umut Şen</p>
+
+    <div class="flex gap-8">
+      <ul class="hidden sm:flex gap-8">
+        {navItems.map((item) => (
+          <li>
+            <a
+              href={`#${item.id}`}
+              class="group flex items-center h-full text-nlight-300 hover:text-nlight-100 transition-colors relative cursor-pointer"
+            >
+              <span class="text-primary-400 font-bold absolute top-1/2 -translate-y-1/2 -left-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200">
+                /
+              </span>
+              {t(lang, item.label)}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <LanguageSwitcher lang={lang} />
+    </div>
+  </div>
+
+  <div class="w-full h-[2px] bg-gradient-to-r from-transparent via-nlight-200/25 to-transparent"></div>
+</nav>

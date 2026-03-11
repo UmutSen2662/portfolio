@@ -1,0 +1,56 @@
+---
+import '@/styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+	title?: string;
+    description?: string;
+    lang?: 'en' | 'tr';
+    image?: string;
+}
+const { 
+    title = "Umut Şen | Full Stack Engineer", 
+    description = "Portfolio of Umut Şen - Full Stack Engineer specializing in React, Node.js, and modern web technologies. View my projects and experience.",
+    lang = "en",
+    image = "/icon.svg" 
+} = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+
+    <!-- OpenGraph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+    <link rel="canonical" href={canonicalURL.href} />
+
+    <!-- Alternate language links for SEO (must be absolute URLs) -->
+    <link rel="alternate" hreflang="en" href={new URL("/en/", Astro.site || Astro.url.origin).href} />
+    <link rel="alternate" hreflang="tr" href={new URL("/tr/", Astro.site || Astro.url.origin).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL("/en/", Astro.site || Astro.url.origin).href} />
+
+    <ClientRouter />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

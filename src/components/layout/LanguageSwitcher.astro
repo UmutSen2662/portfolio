@@ -1,0 +1,18 @@
+---
+interface Props {
+  lang: 'en' | 'tr';
+}
+
+const { lang } = Astro.props;
+const otherLang = lang === 'en' ? 'tr' : 'en';
+const label = lang === 'en' ? 'Türkçe' : 'English';
+---
+
+<div class="flex items-center gap-2">
+  <a
+    href={`/${otherLang}/`}
+    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-white/10 hover:text-nlight-100 h-8 px-3"
+  >
+    {label}
+  </a>
+</div>
