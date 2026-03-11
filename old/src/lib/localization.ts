@@ -24,9 +24,3 @@ export function resolvePoly<T>(value: Poly<T>, lang: Language): T {
     }
     return value as T;
 }
-
-import { UI_LABELS } from '@/data/ui';
-
-export function t(lang: Language, key: keyof typeof UI_LABELS['en']): string {
-    return UI_LABELS[lang]?.[key] || UI_LABELS['en'][key];
-}

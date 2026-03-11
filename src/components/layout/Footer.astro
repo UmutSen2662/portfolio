@@ -1,0 +1,84 @@
+---
+import { t, resolvePoly } from '@/lib/localization';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { HERO } from '@/data/hero';
+
+interface Props {
+  lang: 'en' | 'tr';
+}
+
+const { lang } = Astro.props;
+const currentYear = new Date().getFullYear();
+
+const hero = {
+  resume: resolvePoly(HERO.links.resume, lang),
+  github: HERO.links.github,
+  linkedin: HERO.links.linkedin,
+  email: HERO.links.email,
+};
+---
+
+<footer class="w-full relative z-40 py-2">
+  <div class="max-w-3xl mx-auto px-6 pb-24 sm:pb-4 flex flex-col gap-6">
+    {/* Top Row: Status, Language & Links */}
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-4">
+        <LanguageSwitcher lang={lang} />
+        {/* Compact Status */}
+        <div class="flex items-center gap-2 bg-ndark-800/50 px-3 py-1.5 rounded-full border border-ndark-700/50">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          </span>
+          <span class="text-xs font-medium text-green-400 tracking-wide">
+            {t(lang, "footer.openToWork")}
+          </span>
+        </div>
+      </div>
+
+      {/* Compact Socials */}
+      <div class="flex items-center gap-6">
+        <a
+          href={hero.resume}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-nlight-300 hover:text-primary-400 transition-colors font-medium"
+        >
+          {t(lang, "hero.resume")}
+        </a>
+        <a
+          href={hero.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-nlight-300 hover:text-nlight-100 transition-colors font-medium"
+        >
+          GitHub
+        </a>
+        <a
+          href={hero.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-nlight-300 hover:text-blue-400 transition-colors font-medium"
+        >
+          LinkedIn
+        </a>
+        <a
+          href={hero.email}
+          class="text-sm text-nlight-300 hover:text-primary-400 transition-colors font-medium"
+        >
+          Email
+        </a>
+      </div>
+    </div>
+
+    {/* Bottom Row: Copyright & Tech Centered */}
+    <div class="flex justify-center items-center gap-4 text-xs text-nlight-400 opacity-80">
+      <p>© {currentYear} Umut Şen.</p>
+      <p class="hidden sm:block opacity-70">|</p>
+      <p class="opacity-70">
+        {t(lang, "footer.builtWith")} <span class="text-nlight-200">Astro</span> &{" "}
+        <span class="text-primary-400">Tailwind</span>
+      </p>
+    </div>
+  </div>
+</footer>

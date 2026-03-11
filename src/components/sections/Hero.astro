@@ -1,0 +1,111 @@
+---
+import { t, resolvePoly } from '@/lib/localization';
+import { HERO } from '@/data/hero';
+import Button from '@/components/ui/Button.astro';
+import Tooltip from '@/components/ui/Tooltip.astro';
+import { FaGithub, FaLinkedin, FaFileAlt, FaEnvelope, FaCode } from "react-icons/fa";
+
+interface Props {
+  lang: 'en' | 'tr';
+}
+
+const { lang } = Astro.props;
+
+const hero = {
+  greeting: resolvePoly(HERO.greeting, lang),
+  title: resolvePoly(HERO.title, lang),
+  description: resolvePoly(HERO.description, lang),
+  location: resolvePoly(HERO.location, lang),
+  viewProjects: resolvePoly(HERO.viewProjects, lang),
+  resumeDownloadName: resolvePoly(HERO.resumeDownloadName, lang),
+  links: {
+    ...HERO.links,
+    resume: resolvePoly(HERO.links.resume, lang),
+  },
+};
+---
+
+<section
+    id="hero"
+    class="min-h-[calc(100vh-5rem)] py-20 flex flex-col items-center justify-center text-center gap-6 relative z-10"
+>
+    <!-- Top: Small Greeting -->
+    <p class="text-2xl md:text-3xl text-nlight-200 font-medium tracking-wide">{hero.greeting}</p>
+
+    <!-- Middle: Huge H1 -->
+    <div class="relative w-fit mx-auto" data-attractor="true">
+        <h1 class="flex flex-col items-center leading-tight">
+            {hero.title.map((line) => (
+                <span class="text-5xl md:text-7xl lg:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-r from-nlight-100/90 to-nlight-100/70 pb-4">
+                    {line}
+                </span>
+            ))}
+        </h1>
+    </div>
+
+    <!-- Bottom: Medium Subtitle -->
+    <p class="text-lg md:text-xl text-nlight-300 max-w-2xl font-light">{hero.description}</p>
+
+    <!-- Footer of Hero: Location -->
+    <p class="text-base text-nlight-400 opacity-80 mt-2">{hero.location}</p>
+
+    <!-- CTAs -->
+    <div class="flex flex-col md:flex-row items-center gap-4 mt-8">
+        <!-- Primary CTA - View Projects (Hover Strategy) -->
+        <Button
+            href="#projects"
+            variant="default"
+            size="lg"
+            class="gap-2 active:scale-95"
+        >
+            <FaCode /> {hero.viewProjects}
+        </Button>
+
+        <!-- Secondary Social Links -->
+        <div class="flex gap-2 text-2xl text-nlight-300">
+            <Tooltip text={t(lang, "hero.resume")}>
+                <a
+                    href={hero.links.resume}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="p-2 hover:text-white transition-colors hover:scale-110 transform duration-200 block"
+                    aria-label="Resume"
+                    download={hero.resumeDownloadName}
+                >
+                    <FaFileAlt />
+                </a>
+            </Tooltip>
+            <Tooltip text="GitHub">
+                <a
+                    href={hero.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="p-2 hover:text-white transition-colors hover:scale-110 transform duration-200 block"
+                    aria-label="GitHub"
+                >
+                    <FaGithub />
+                </a>
+            </Tooltip>
+            <Tooltip text="LinkedIn">
+                <a
+                    href={hero.links.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="p-2 hover:text-white transition-colors hover:scale-110 transform duration-200 block"
+                    aria-label="LinkedIn"
+                >
+                    <FaLinkedin />
+                </a>
+            </Tooltip>
+            <Tooltip text="Email">
+                <a
+                    href={hero.links.email}
+                    class="p-2 hover:text-white transition-colors hover:scale-110 transform duration-200 block"
+                    aria-label="Email"
+                >
+                    <FaEnvelope />
+                </a>
+            </Tooltip>
+        </div>
+    </div>
+</section>

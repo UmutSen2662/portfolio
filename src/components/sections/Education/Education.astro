@@ -1,0 +1,32 @@
+---
+import { EDUCATION } from "@/data/education";
+import { resolvePoly, t } from "@/lib/localization";
+import EducationCard from "./EducationCard.astro";
+
+interface Props {
+  lang: 'en' | 'tr';
+}
+const { lang } = Astro.props;
+
+const education = EDUCATION.map(e => ({
+  id: e.id,
+  institution: resolvePoly(e.institution, lang),
+  degree: resolvePoly(e.degree, lang),
+  startDate: resolvePoly(e.startDate, lang),
+  endDate: resolvePoly(e.endDate, lang),
+  location: resolvePoly(e.location, lang),
+  gpa: e.gpa,
+  honors: resolvePoly(e.honors, lang),
+}));
+---
+<section id="education" class="flex flex-col gap-4 pt-6">
+    <h2 class="text-2xl font-bold flex items-center gap-2">
+        <span class="text-primary-400">/</span> {t(lang, "nav.education")}
+    </h2>
+
+    <div class="flex flex-col gap-4">
+        {education.map((edu) => (
+            <EducationCard education={edu} />
+        ))}
+    </div>
+</section>
