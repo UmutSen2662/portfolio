@@ -1,20 +1,23 @@
 ---
-import '@/styles/global.css';
-import { ClientRouter } from 'astro:transitions';
+import "@/styles/global.css";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
-	title?: string;
-    description?: string;
-    lang?: 'en' | 'tr';
-    image?: string;
+  title?: string;
+  description?: string;
+  lang?: "en" | "tr";
+  image?: string;
 }
-const { 
-    title = "Umut Şen | Full Stack Engineer", 
-    description = "Portfolio of Umut Şen - Full Stack Engineer specializing in React, Node.js, and modern web technologies. View my projects and experience.",
-    lang = "en",
-    image = "/icon.svg" 
+const {
+  title = "Umut Şen | Full Stack Engineer",
+  description = "Portfolio of Umut Şen - Full Stack Engineer specializing in React, Node.js, and modern web technologies. View my projects and experience.",
+  lang = "en",
+  image = "/favicon.svg",
 } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin);
+const canonicalURL = new URL(
+  Astro.url.pathname,
+  Astro.site || Astro.url.origin,
+);
 ---
 
 <!doctype html>
@@ -22,7 +25,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin)
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
 
@@ -43,15 +47,30 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin)
     <link rel="canonical" href={canonicalURL.href} />
 
     <!-- Alternate language links for SEO (must be absolute URLs) -->
-    <link rel="alternate" hreflang="en" href={new URL("/en/", Astro.site || Astro.url.origin).href} />
-    <link rel="alternate" hreflang="tr" href={new URL("/tr/", Astro.site || Astro.url.origin).href} />
-    <link rel="alternate" hreflang="x-default" href={new URL("/en/", Astro.site || Astro.url.origin).href} />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href={new URL("/en/", Astro.site || Astro.url.origin).href}
+    />
+    <link
+      rel="alternate"
+      hreflang="tr"
+      href={new URL("/tr/", Astro.site || Astro.url.origin).href}
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL("/en/", Astro.site || Astro.url.origin).href}
+    />
 
     <ClientRouter />
     <title>{title}</title>
-    
+
     <!-- Umami Analytics -->
-    <script defer src="https://umami.umutsen.dev/script.js" data-website-id="72bef2d6-83bb-4c7e-b7f3-0d479dbd7bd8"></script>
+    <script
+      defer
+      src="https://umami.umutsen.dev/script.js"
+      data-website-id="72bef2d6-83bb-4c7e-b7f3-0d479dbd7bd8"></script>
   </head>
   <body>
     <slot />
