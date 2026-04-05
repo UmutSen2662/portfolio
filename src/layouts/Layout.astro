@@ -49,6 +49,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin)
 
     <ClientRouter />
     <title>{title}</title>
+    
+    <!-- Umami Analytics -->
+    <script defer src="https://umami.umutsen.dev/script.js" data-website-id="72bef2d6-83bb-4c7e-b7f3-0d479dbd7bd8"></script>
   </head>
   <body>
     <slot />
