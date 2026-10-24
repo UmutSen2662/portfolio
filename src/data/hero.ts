@@ -14,8 +14,8 @@ export const HERO: Hero = {
     greeting: { en: "Hi, I'm Umut", tr: "Merhaba, Ben Umut" },
     title: { en: ["Full-Stack", "Engineer"], tr: ["Full-Stack", "Mühendis"] },
     description: {
-        en: "Specializing in React & Node.js | METU High Honors (3.8 GPA)",
-        tr: "React & Node.js odaklı | ODTÜ Yüksek Şeref (3.8 GPA)",
+        en: "Specializing in React & Node.js | METU High Honors (3.86 GPA)",
+        tr: "React & Node.js odaklı | ODTÜ Yüksek Şeref (3.86 GPA)",
     },
     location: { en: "Based in Denizli, Turkey 🇹🇷", tr: "Denizli, Türkiye" },
     downloadResume: { en: "Download Resume", tr: "CV İndir" },

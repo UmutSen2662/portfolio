@@ -9,6 +9,6 @@ export const EDUCATION: Education[] = [
         location: { en: "North Cyprus Campus, TRNC", tr: "Kuzey Kıbrıs Kampüsü, KKTC" },
         startDate: "2021",
         endDate: "2026",
-        gpa: "3.8",
+        gpa: "3.86",
     },
 ];
